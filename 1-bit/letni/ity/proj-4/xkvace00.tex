@@ -1,0 +1,85 @@
+%
+% Typography and Publishing - 4th Project
+% Ac.Year 2021/2022, Summer Semester
+%
+% Login xkvace00, Kvacek David
+% 1st year BITP, full-time, FIT
+% xkvace00@stud.fit.vutbr.cz
+%
+% Date: 2022-04-16
+%
+
+\documentclass[a4paper, 11pt]{article}
+\usepackage[left=2cm, text={17cm, 25cm}, top=3cm]{geometry}
+\usepackage[czech]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[IL2]{fontenc}
+\usepackage{hyperref}
+\usepackage{times}
+
+\DeclareRobustCommand{\BibTeX}{{\normalfont B\kern-.05em{\scshape i\kern-.025em b}\kern-.08em \TeX}}
+
+\begin{document}
+
+\begin{titlepage}
+    \begin{center}
+        \Huge\textsc{Vysoké učení technické v~Brně} \\
+        \huge\textsc{Fakulta informačních technologií} \\
+        \vspace{\stretch{0.382}}
+        \LARGE{Typografie a~publikování\,--\,4.~projekt} \\
+        \Huge{Bibliografické citace} \\
+        \vspace{\stretch{0.618}}
+    \end{center}
+    \Large{\today \hfill David Kvaček}
+\end{titlepage}
+
+\section*{Úvod}
+Jakýkoliv dokument, technická zpráva či odborný článek by měl mít svou grafickou kvalitu.
+A~právě této oblasti zpracování písemného projevu se věnuje vědní obor typografie.
+K~dosažení grafické dokonalosti nám mohou pomoci různé programy, ať už se jedná o~Microsoft Office Word, Apache OpenOffice nebo LibreOffice Writer.
+Pravdou ale je, že momentálně nejpokročilejším pomocníkem se zdá být \TeX.
+Je možné se setkat i~s~různými nadstavbami jako \LaTeX nebo \BibTeX , který se používá pro bibliografické citace, a~to včetně podpory pro normu ČSN ISO 690 \cite{Martinek2008}.
+
+\section{Písmo}
+Základním výstupem našich prací je bezpochyby samotné písmo.
+V~minulosti, kdy byl předním nástrojem pro psaní textů psací stroj, se používalo tzv. neproporcionální písmo.
+To znamenalo, že šířka všech znaků byla stejná.
+Dnes se obvykle používá písmo proporcionální, protože je pro náš zrak příjemnější a~čitelnější.
+Písmena se stejnou šířkou se však používají např. pro zvýraznění některé části textu, podrobněji zpracováno v~kvalifikační práci \cite{MUNI2011}.
+Navíc je již v~dnešní době podporováno kódování znaků Unicode, které umožňuje šifrovat složitější i~speciální znaky, což využijí především asijské země \cite{Asia2008a}.
+S~tím však souvisí přepracování nástroje \BibTeX, na které navazuje článek \cite{Asia2008b}.
+
+\section{Sazba}
+Výsledný text může být vysázen hladkou, nebo smíšenou sazbou.
+Pro dokumenty odpovídající určité kvalitě je typická hladká sazba.
+Ta nepoužívá tolik zdobného textu, aby nenarušila plynulost projevu.
+Tomu napomáhá i~automatické dělení slov, které je dále posáno zde \cite{Olsak2014}.
+Vyskytují se zde interpunkční znaménka, pomlčka a~spojovník, uvozovky a~závorky a~další znaky (např. apostrof, paragraf, ampersand, hvězdička, procento, promile, stupeň aj.).
+Některá další pravidla můžete nalézt v~této práci \cite{VSPJ2021}.
+
+\section{Seznam}
+Pokud máme v~úmyslu napsat nějakou posloupnost položek, výčet vlastností nebo seznam osob, můžeme použít speciální prostředí, které je určeno přesně k~tomuto účelu.
+\TeX\ navíc umožňuje libovolné nastavení zarovnání odrážek a~jejich vzdálenost.
+Tu můžeme zadávat nejen v~imperiálních, ale také pomocí metrických jednotek.
+Software je přizpůsoben rovněž na oddělování desetinných čísel čárkou i~tečkou, což je detailněji popsáno v~této monografii \cite{Olsak2016}.
+
+\section{Tabulky}
+Nástroj \TeX\ není primárně určen pro sázení tabulek.
+Pokud však přesto potřebujeme ve svém textu nějakou pasáž zpřehlednit, tabulka je na to ideální.
+S~tímto řešením nám může pomoci nějaké specializované prostředí, které nám ulehčí práci.
+Jak pracovat s~jednotlivými nástroji se dozvíte v~\cite{Voss2011}.
+
+\section{Matematika}
+Kde je ale \TeX\ doma, to je sázení matematických rovnic, vzorců a~algoritmů.
+Podle mého názoru nenajdeme lepší software s~tak propracovaným matematickým prostředím.
+Při sázení složitých matematicých výrazů se nemusíme starat o~velikost, stačí se přepnout do určitého módu.
+Můžeme si vybrat mezi kompaktním $\sum_{i=1}^n i_n$ a~samostatným režimem \cite{Satrapa2011}.
+$$\int_{0}^{\pi} \sqrt{\alpha^{2} + x^{2}}\,dx$$
+Tento výraz a~mnoho dalšího naleznete v~\cite{Gratzer2004}.
+
+\newpage
+\bibliographystyle{czechiso}
+\bibliography{proj4}
+
+\end{document}
+
