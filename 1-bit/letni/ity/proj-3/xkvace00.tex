@@ -1,0 +1,214 @@
+%
+% Typography and Publishing - 3rd Project
+% Ac.Year 2021/2022, Summer Semester
+%
+% Login xkvace00, Kvacek David
+% 1st year BITP, full-time, FIT
+% xkvace00@stud.fit.vutbr.cz
+%
+% Date: 2022-04-04
+%
+
+\documentclass[a4paper, 11pt]{article}
+\usepackage[left=2cm, text={17cm, 24cm}, top=3cm]{geometry}
+\usepackage[czech]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[IL2]{fontenc}
+\usepackage{hyperref}
+\usepackage{times}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage[ruled, czech]{algorithm2e}
+\usepackage{algpseudocode}
+\usepackage{pdflscape}
+\usepackage{picture}
+
+\newtheorem{definition}{Definice}
+\newtheorem{sentence}{Věta}
+
+\begin{document}
+
+\begin{titlepage}
+    \begin{center}
+        \Huge\textsc{Vysoké učení technické v~Brně} \\
+        \huge\textsc{Fakulta informačních technologií} \\
+        \vspace{\stretch{0.382}}
+        \LARGE{Typografie a~publikování\,--\,3.~projekt} \\
+        \Huge{Tabulky a~obrázky} \\
+        \vspace{\stretch{0.618}}
+    \end{center}
+    \Large{\today \hfill David Kvaček}
+\end{titlepage}
+
+\section{Úvodní strana}
+    Název práce umístěte do zlatého řezu a~nezapoměňte uvést \uv{dnešní} datum a~vaše jméno a~příjmení.
+
+\section{Tabulky}
+    Pro sázení tabulek můžeme použít buď prostředí \verb|tabbing| nebo prostředí \verb|tabular|.
+    
+\subsection{Prostředí \texttt{tabbing}}
+    Při použití \verb|tabbing| vypadá tabulka následovně:
+    
+\begin{tabbing}
+    \hspace{1.2in}\=\hspace{1in}\=\kill
+    \textbf{Ovoce} \> \textbf{Cena} \> \textbf{Množství} \\ 
+    Jablka \> 25,90 \> 3\,kg \\
+    Hrušky \> 27,40 \> 2,5\,kg \\
+    Vodní melouny \> 35,-- \> 1\,kus \\
+\end{tabbing}
+    Toto prostředí se dá také použít pro sázení algoritmů, ovšem vhodnější je použít prostředí \verb|algorithm| nebo \verb|algorithm2e| (viz sekce \ref{algorithms}).
+    
+\subsection{Prostředí \texttt{tabular}}
+    Další možností, jak vytvořit tabulku, je použít prostředí \verb|tabular|. Tabulky pak budou vypadat takto\footnote{Kdyby byl problém s~\texttt{cline}, zkuste se podívat třeba sem: \href{http://www.abclinuxu.cz/tex/poradna/show/325037}{http://www.abclinuxu.cz/tex/poradna/show/325037}}
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        & \multicolumn{2}{|c|}{\textbf{Cena}} \\ \hline
+        \textbf{Měna} & \textbf{nákup} & \textbf{prodej} \\ \hline
+        EUR & 24,775 & 25,943 \\
+        GBP & 29,394 & 30,492 \\
+        USD & 22,423 & 23,661 \\ \hline
+    \end{tabular}
+    \caption{Tabulka kurzů k dnešnímu dni}
+    \label{table1}
+\end{table}
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|c|}
+        \hline
+        A & $\neg$\,A \\ \hline
+        \textbf{P} & N \\ \hline
+        \textbf{O} & O \\ \hline
+        \textbf{X} & X \\ \hline
+        \textbf{N} & P \\ \hline
+    \end{tabular}
+    \caption{Protože Kleeneho trojhodnotová logika už je \uv{zastaralá}, uvádíme si zde příklad čtyřhodnotové logiky}
+    \label{table2}
+\end{table}
+
+\pagebreak
+
+\section{Algoritmy}
+    \label{algorithms}
+    Pokud budeme chtít vysázet algoritmus, můžeme použít prostředí \verb|algorithm|\footnote{Pro nápovědu, jak zacházet s prostředím \texttt{algorithm}, můžeme zkusit tuhle stránku:
+    
+    \href{http://ftp.cstug.cz/pub/tex/CTAN/macros/latex/contrib/algorithms/algorithms.pdf}{http://ftp.cstug.cz/pub/tex/CTAN/macros/latex/contrib/algorithms/algorithms.pdf}.} nebo \verb|algorithm2e|\footnote{Pro \texttt{algorithm2e} zase tuhle: \href{http://ftp.cstug.cz/pub/tex/CTAN/macros/latex/contrib/algorithm2e/doc/algorithm2e.pdf}{http://ftp.cstug.cz/pub/tex/CTAN/macros/latex/contrib/algorithm2e/doc/algorithm2e.pdf}.}. Příklad použití prostředí \verb|algorithm2e| viz Algoritmus~\ref{fastslam}.
+    
+\bigskip
+    
+\begin{algorithm}
+    \SetNlSty{}{}{:}
+    \SetKwFor{lFor}{for}{do}{end\ for}
+    
+    \textbf{Input: } $(X_{t\,-\,1}, u_t, z_t)$ \\
+    \textbf{Output: } $X_t$ \\
+    \nl $\overline{X_t} = X_t = 0$ \\
+    \nl \lFor{$k = 1$ \KwTo $M$}{
+    \nl $x_t^{[k]} = sample\_motion\_model(u_t, x_{t-1}^{[k]})$ \\
+    \nl $\omega_t^{[k]} = measurement\_model(z_t, x_t^{[k]}, m_{t-1}^{[k]})$ \\
+    \nl $m_t^{[k]} = updated\_occupancy\_grid(z_t, x_t^{[k]}, m_{t-1}^{[k]})$ \\
+    \nl $\overline{X_t} = \overline{X_t} + \langle x_x^{[m]}, \omega_t^{[m]}\rangle$}
+    \nl \lFor{$k = 1$ \KwTo $M$}{
+    \nl draw $i$ with probability $\approx \omega_t^{[i]}$ \\
+    \nl add $\langle x_x^{[k]}, m_t^{[k]} \rangle$ to $X_t$}
+    \nl \KwRet $X_t$
+    
+    \caption{\textsc{FastSLAM}\label{fastslam}}
+    \label{alg1}
+\end{algorithm}
+
+\bigskip
+
+\section{Obrázky}
+    Do našich článků můžeme samozřejmě vkládat obrázky. Pokud je obrázkem fotografie, můžeme klidně použít bitmapový soubor. Pokud by to ale mělo být nějaké schéma nebo něco podobného, je dobrým zvykem takovýto obrázek vytvořit vektorově.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.35]{etiopan.eps}\scalebox{-1}[1]{\includegraphics[scale=0.35]{etiopan.eps}}
+    \caption{Malý Etiopánek a~jeho bratříček}
+    \label{pic1}
+\end{figure}
+
+\newpage
+
+Rozdíl mezi vektorovým \dots
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.35]{oniisan-1.eps}
+    \caption{Vektorový obrázek}
+    \label{pic2}
+\end{figure}
+
+\bigskip
+
+\dots a bitmapovým obrázkem
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.55]{oniisan-2.eps}
+    \caption{Bitmapový obrázek}
+    \label{pic3}
+\end{figure}
+
+\bigskip
+
+se projeví například při zvětšení.
+
+Odkazy (nejen ty) na obrázky \ref{pic1}, \ref{pic2} a~\ref{pic3}, na tabulky \ref{table1} a~\ref{table2}~a také na algoritmus~\ref{alg1} jsou udělány pomocí křížových odkazů. Pak je ovšem potřeba zdrojový soubor přeložit dvakrát.
+
+Vektorové obrázky lze vytvořit i~přímo v \LaTeX u, například pomocí prostředí \verb|picture|.
+
+\newpage
+
+\begin{landscape}
+    \begin{figure}[h!]
+    \centering
+    \begin{picture}(19.5cm,9.7cm)
+        \setlength{\unitlength}{1cm}
+        \linethickness{1pt}
+
+        \linethickness{1pt}
+        \put(0,0){\line(1,0){19.5}}
+        \put(0,0){\line(0,1){9.7}}
+        \put(0,9.7){\line(1,0){19.5}}
+        \put(19.5,0){\line(0,1){9.7}}
+        \linethickness{5pt}
+        \put(0.4,1.4){\line(1,0){18.6}}
+        \linethickness{1pt}
+        \put(2.4,1.4){\line(0,1){3.5}}
+        \put(2.4,4.9){\line(1,0){4.2}}
+        \put(6.6,4.4){\line(0,1){1}}
+        \put(6.6,5.4){\line(1,0){5.5}}
+        \put(6.6,4.4){\line(1,0){5.5}}
+        \put(12.1,5.4){\line(0,-1){1}}
+        \put(12.1,4.6){\line(1,0){4.2}}
+        \put(16.3,4.6){\line(0,-1){0.2}}
+
+        \put(4.2,4.4){\line(1,0){13.5}}
+        \put(4.2,4.4){\line(0,-1){0.5}}
+        \put(17.7,4.4){\line(0,-1){0.5}}
+        \put(4.2,3.9){\line(1,0){13.5}}
+        \put(4.2,3.9){\line(1,-1){1}}
+
+        \put(3.5,1.4){\line(0,1){1.5}}
+        \put(3.5,2.9){\line(1,0){3.5}}
+        \put(7,2.9){\line(3,-1){4.3}}
+                    
+        \put(17.5,3.7){\line(-1,0){10.2}}
+        \put(7.3,3.7){\line(0,-1){0.9}}
+        \put(17.5,3.7){\line(0,-1){1.4}}
+        \put(17.7,2.3){\line(-1,0){8.9}}
+        \put(17.7,1.4){\line(0,1){0.9}}
+        \put(16.7,7.5){\circle{1.4}}
+        
+    \end{picture}
+    \caption{Vektorový obrázek moderního bydlení vhodného pro 21.~století. (Buďto vytvořte stejný obrázek, anebo nakreslete pomocí \texttt{picture} váš vlastní domov.)}
+    \end{figure}
+\end{landscape}
+
+\end{document}
+
