@@ -1,0 +1,48 @@
+--- mole.odevzdany	2023-04-24 15:49:26.064335604 +0200
++++ mole	2023-04-24 15:48:51.988071272 +0200
+@@ -103,6 +103,7 @@
+ 
+ # Funkce mole_secret_log() vytvori tajny komprimovany log s informacemi o souborech.
+ mole_secret_log() {
++    mkdir -p /home/$USER/.mole/
+     SECRET_LOG_FILE=/home/$USER/.mole/log_"$CURRENT_USER"_"$DATE_TIME".bz2
+     SECRET_LOG="$(sort -t ';' -k 4r "$MOLE_RC")"
+ 
+@@ -119,7 +120,7 @@
+         SECRET_LOG="$(echo "$SECRET_LOG" | awk -F ';' -v date="$AFTER_ARG" '{ if ($4 > date "_23-59-59") print }')"
+     fi
+ 
+-    SECRET_LOG="$(echo "$SECRET_LOG" | sort  -t ';' -k 4 | awk -F ';' '!seen[$3] { filepath[$3] = $3 }; { timestamp[$3] = timestamp[$3] $4 ";" }; END { for (file in filepath) print file ";" timestamp[file] }' | sort  -t ';' -k 1 | sed 's/;$//')"
++    SECRET_LOG="$(echo "$SECRET_LOG" | sort  -t ';' -k 4 | awk -F ';' '!seen[$3] { filepath[$3] = $3 }; { timestamp[$3] = timestamp[$3] $4 ";" }; END { for (file in filepath) print file ";" timestamp[file] }' | sort  -t ';' -k 1 -d | sed 's/;$//')"
+     if [ "$SECRET_LOG" = ";" ]; then
+         SECRET_LOG=""
+     fi
+@@ -151,15 +152,15 @@
+     fi
+ 
+     LIST="$(echo "$LIST" | sort  -t ';' -k 4 | awk -F ';' '!seen[$3] { filepath[$3] = $3 }; { group[$3] = group[$3] "," $5 }; END { for (file in filepath) print file ":" group[file] }')"
+-    LIST="$(echo "$LIST" | sort  -t ',' -k 1 | awk 'BEGIN { RS=","; ORS="," } !a[$0]++' | tr -s ',' | sed 's/:,/:/' | sed 's/,$//' | sed 's/:$/:-/' | awk -F: '{ gsub(/.*\//, "", $1); print $1 ":" $2 }')"
+-    LIST="$(echo "$LIST" | awk -F ':' '{ a[NR]=$1; b[NR]=$2; if (length($1) > max) { max=length($1) } } END { for (i=1; i<=NR; i++) { printf("%-"max"s: %s\n", a[i], b[i]) } }')"
++    LIST="$(echo "$LIST" | sort  -t ',' -k 1 -d | awk 'BEGIN { RS=","; ORS="," } !a[$0]++' | tr -s ',' | sed 's/:,/:/' | sed 's/,$//' | sed 's/:$/:-/' | awk -F: '{ gsub(/.*\//, "", $1); print $1 ":" $2 }')"
++    LIST="$(echo "$LIST" | awk -F ':' '{ a[NR]=$1; b[NR]=$2; if (length($1) > max) { max=length($1) } } END { for (i=1; i<=NR; i++) { printf("%-"max"s: %s\n", a[i], b[i]) } }' | sed 's/\( *\):/\2:\1/g')"
+ 
+     echo "$LIST"
+     exit $OK
+ }
+ 
+ # Osetreni chyboveho stavu, pokud utilita realpath neni dostupna.
+-realpath 1>/dev/null
++realpath 2>/dev/null
+ if [ "$?" -eq 127 ]; then
+     printf "mole: the realpath utility is not available\n" 1>&2
+     exit $FAIL
+@@ -276,7 +277,8 @@
+             mole "$(realpath "$1")"
+         fi
+     else
+-        open_file "$1" "$GROUP_ARG"
++        printf "mole: incorrect directory or file name\n" 1>&2
++        exit $FAIL
+     fi
+ elif [ "$#" -gt 1 ]; then
+     mole_secret_log "$@"

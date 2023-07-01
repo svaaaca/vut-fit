@@ -1,0 +1,285 @@
+#!/bin/sh
+# Implementace 1. ulohy do IOS 2022/23
+# Jmeno a prijmeni: David Kvacek
+# Login: xkvace00
+# Datum: 2023-03-23
+
+export POSIXLY_CORRECT=yes
+export LC_ALL=C
+
+OK=0
+FAIL=1
+
+DATE_TIME="$(date +%Y-%m-%d_%H-%M-%S)"
+CURRENT_USER="$(whoami)"
+
+GROUP_ARG=""
+MOST_OPT=false
+BEFORE_ARG=""
+AFTER_ARG=""
+
+LIST_CMD=false
+SECRET_LOG_CMD=false
+
+# Funkce help() tiskne napovedu skriptu na standardni vystup.
+help() {
+    printf "\n"
+    printf "USAGE:\n"
+    printf "\n"
+    printf "  mole -h                             - prints help to use the script\n"
+    printf "\n"
+    printf "  mole [-g GROUP] FILE                - the specified FILE will be opened\n"
+    printf "\n"
+    printf "  mole [-m] [FILTERS] [DIRECTORY]     - if DIRECTORY corresponds to an existing\n"
+    printf "                                      - directory, the script selects the file\n"
+    printf "                                      - to be opened from that directory\n"
+    printf "\n"
+    printf "  mole list [FILTERS] [DIRECTORY]     - the script displays a list of files\n"
+    printf "                                      - that have been opened (edited)\n"
+    printf "                                      - by the script in the given directory\n"
+    printf "\n"
+    printf "FILTERS:\n"
+    printf "\n"
+    printf "  [-g GROUP1[,GROUP2[,...]]]          - GROUP specifications, a file will only\n"
+    printf "                                      - be considered (for opening or listing\n"
+    printf "                                      - purposes) if its execution falls into\n"
+    printf "                                      - at least one of these groups\n"
+    printf "\n"
+    printf "  [-a DATE]                           - records of open (edited) files before\n"
+    printf "                                      - this DATE will not be considered\n"
+    printf "                                      - (DATE is in the format YYYY-MM-DD)\n"
+    printf "\n"
+    printf "  [-b DATE]                           - records of open (edited) files after\n"
+    printf "                                      - this DATE will not be considered\n"
+    printf "                                      - (DATE is in the format YYYY-MM-DD)\n"
+    printf "\n"
+    exit $OK
+}
+
+# Funkce open_file() otevre zadany soubor ve stanovenem editoru a zaznamena prislusny log.
+open_file() {
+    if [ ! -r "$MOLE_RC" ] || [ ! -w "$MOLE_RC" ]; then
+        printf "mole: the file in the MOLE_RC variable does not have sufficient permissions\n" 1>&2
+        exit $FAIL
+    fi
+    printf "%s;%s;%s;%s;%s\n" "$(basename "$1")" "$(dirname "$1")" "$1" "$DATE_TIME" "$2" 1>>"$MOLE_RC"
+    $EDITOR "$1"
+    exit $?
+}
+
+# Funkce mole() vybere soubor, ktery ma byt skriptem otevren.
+mole () {
+    FILE_TO_OPEN="$(grep -E ";$1;" "$MOLE_RC" | sort -t ';' -k 4r)"
+    
+    if [ "$GROUP_ARG" != "" ]; then
+        GROUP="$(echo "$GROUP_ARG" | tr ',' '|')"
+        FILE_TO_OPEN="$(echo "$FILE_TO_OPEN" | awk -F ';' '$5 ~ /'"$GROUP"'/ { print }')"
+    fi
+
+    if [ "$AFTER_ARG" != "" ]; then
+        FILE_TO_OPEN="$(echo "$FILE_TO_OPEN" | awk -F ';' -v date="$AFTER_ARG" '{ if ($4 > date "_23-59-59") print }')"
+    fi
+
+    if [ "$BEFORE_ARG" != "" ]; then
+        FILE_TO_OPEN="$(echo "$FILE_TO_OPEN" | awk -F ';' -v date="$BEFORE_ARG" '{ if ($4 < date "_00-00-00") print }')"
+    fi
+
+    if [ "$MOST_OPT" = true ]; then
+        FILE_TO_OPEN="$(echo "$FILE_TO_OPEN" | awk -F ';' '{ print $3 }' | sort | uniq -c | sort -nr | head -1 | awk '{ print $2 }')"
+        if [ "$FILE_TO_OPEN" = "" ]; then
+            printf "mole: no file has been opened (edited) or matches the specified filters in the given directory\n" 1>&2
+            exit $FAIL
+        fi
+        open_file "$FILE_TO_OPEN" ""
+    fi
+
+    FILE_TO_OPEN="$(echo "$FILE_TO_OPEN" | head -1 | awk -F ';' '{ print $3 }')"
+    if [ "$FILE_TO_OPEN" = "" ]; then
+        printf "mole: no file has been opened (edited) or matches the specified filters in the given directory\n" 1>&2
+        exit $FAIL
+    fi
+    open_file "$FILE_TO_OPEN" ""
+}
+
+# Funkce mole_secret_log() vytvori tajny komprimovany log s informacemi o souborech.
+mole_secret_log() {
+    mkdir -p /home/$USER/.mole/
+    SECRET_LOG_FILE=/home/$USER/.mole/log_"$CURRENT_USER"_"$DATE_TIME".bz2
+    SECRET_LOG="$(sort -t ';' -k 4r "$MOLE_RC")"
+
+    if [ "$#" -gt 0 ]; then
+        DIRECTORY="$(echo "$@" | sed 's/^/;/; s/\/ / /g; s/ /;|;/g; s/\/$//g; s/$/;/')"
+        SECRET_LOG="$(echo "$SECRET_LOG" | grep -E "$DIRECTORY")"
+    fi
+
+    if [ "$BEFORE_ARG" != "" ]; then
+        SECRET_LOG="$(echo "$SECRET_LOG" | awk -F ';' -v date="$BEFORE_ARG" '{ if ($4 < date "_00-00-00") print }')"
+    fi
+
+    if [ "$AFTER_ARG" != "" ]; then
+        SECRET_LOG="$(echo "$SECRET_LOG" | awk -F ';' -v date="$AFTER_ARG" '{ if ($4 > date "_23-59-59") print }')"
+    fi
+
+    SECRET_LOG="$(echo "$SECRET_LOG" | sort  -t ';' -k 4 | awk -F ';' '!seen[$3] { filepath[$3] = $3 }; { timestamp[$3] = timestamp[$3] $4 ";" }; END { for (file in filepath) print file ";" timestamp[file] }' | sort  -t ';' -k 1 -d | sed 's/;$//')"
+    if [ "$SECRET_LOG" = ";" ]; then
+        SECRET_LOG=""
+    fi
+    
+    echo "$SECRET_LOG" | bzip2 > "$SECRET_LOG_FILE"
+    exit $OK
+}
+
+# Funkce mole_list() zobrazi seznam souboru, ktere byly skriptem otevreny (editovany).
+mole_list() {
+    LIST="$(grep -E ";$1;" "$MOLE_RC" | sort -t ';' -k 4r)"
+
+    if [ "$GROUP_ARG" != "" ]; then
+        GROUP="$(echo "$GROUP_ARG" | tr ',' '|')"
+        LIST="$(echo "$LIST" | awk -F ';' '$5 ~ /'"$GROUP"'/ { print }')"
+    fi
+
+    if [ "$AFTER_ARG" != "" ]; then
+        LIST="$(echo "$LIST" | awk -F ';' -v date="$AFTER_ARG" '{ if ($4 > date "_23-59-59") print }')"
+    fi
+
+    if [ "$BEFORE_ARG" != "" ]; then
+        LIST="$(echo "$LIST" | awk -F ';' -v date="$BEFORE_ARG" '{ if ($4 < date "_00-00-00") print }')"
+    fi
+
+    if [ "$LIST" = "" ]; then
+        printf "mole: no file has been opened (edited) or matches the specified filters in the given directory\n" 1>&2
+        exit $FAIL
+    fi
+
+    LIST="$(echo "$LIST" | sort  -t ';' -k 4 | awk -F ';' '!seen[$3] { filepath[$3] = $3 }; { group[$3] = group[$3] "," $5 }; END { for (file in filepath) print file ":" group[file] }')"
+    LIST="$(echo "$LIST" | sort  -t ',' -k 1 -d | awk 'BEGIN { RS=","; ORS="," } !a[$0]++' | tr -s ',' | sed 's/:,/:/' | sed 's/,$//' | sed 's/:$/:-/' | awk -F: '{ gsub(/.*\//, "", $1); print $1 ":" $2 }')"
+    LIST="$(echo "$LIST" | awk -F ':' '{ a[NR]=$1; b[NR]=$2; if (length($1) > max) { max=length($1) } } END { for (i=1; i<=NR; i++) { printf("%-"max"s: %s\n", a[i], b[i]) } }' | sed 's/\( *\):/\2:\1/g')"
+
+    echo "$LIST"
+    exit $OK
+}
+
+# Osetreni chyboveho stavu, pokud utilita realpath neni dostupna.
+realpath 2>/dev/null
+if [ "$?" -eq 127 ]; then
+    printf "mole: the realpath utility is not available\n" 1>&2
+    exit $FAIL
+fi
+
+# Osetreni chyboveho stavu, pokud neni promenna MOLE_RC nastavena.
+if [ -n "$MOLE_RC" ]; then
+    if expr "$MOLE_RC" : '^.*/$' 1>/dev/null; then
+        printf "mole: the MOLE_RC variable does not contain the expected path to the file\n" 1>&2
+        exit $FAIL
+    else
+        if [ -e "$MOLE_RC" ]; then
+            MOLE_RC=$(realpath "$MOLE_RC")
+        else
+            NEW_DIRECTORY=$(dirname "$MOLE_RC")
+            mkdir -p "$NEW_DIRECTORY"
+            if [ -d "$NEW_DIRECTORY" ]; then
+                touch "$MOLE_RC"
+                if [ -f "$MOLE_RC" ]; then
+                    MOLE_RC=$(realpath "$MOLE_RC")
+                else
+                    printf "mole: the MOLE_RC variable contains an incorrect file path\n" 1>&2
+                    exit $FAIL
+                fi
+            else
+                printf "mole: the MOLE_RC variable contains an incorrect directory path\n" 1>&2
+                exit $FAIL
+            fi
+        fi
+    fi
+else
+    printf "mole: the MOLE_RC variable is not set\n" 1>&2
+    exit $FAIL
+fi
+
+# Nastaveni editoru pro naslednou upravu zvolenych souboru.
+if [ -z "$EDITOR" ]; then
+    if [ -n "$VISUAL" ]; then
+        EDITOR="$VISUAL"
+    else
+        EDITOR="vi"
+    fi
+fi
+
+# Postupne zpracovani argumentu z prikazove radky.
+if [ "$#" -eq 0 ]; then
+    mole "$(realpath "$PWD")"
+elif [ "$#" -eq 1 ]; then
+    if [ "$1" = "-h" ]; then
+        help
+    fi
+fi
+
+if [ "$1" = "list" ]; then
+    LIST_CMD=true
+    shift
+elif [ "$1" = "secret-log" ]; then
+    SECRET_LOG_CMD=true
+    shift
+fi
+
+while getopts ":g:mb:a:" OPTION; do
+    case $OPTION in
+        g)
+            GROUP_ARG=$OPTARG
+            ;;
+        m)
+            MOST_OPT=true
+            ;;
+        b)
+            if echo "$OPTARG" | grep -E '^[0-9]{4}-[0-9]{2}-[0-9]{2}$' 1>/dev/null; then
+                BEFORE_ARG=$OPTARG
+            else
+                printf "mole: incorrect date format\n" 1>&2
+                exit $FAIL
+            fi
+            ;;
+        a)
+            if echo "$OPTARG" | grep -E '^[0-9]{4}-[0-9]{2}-[0-9]{2}$' 1>/dev/null; then
+                AFTER_ARG=$OPTARG
+            else
+                printf "mole: incorrect date format\n" 1>&2
+                exit $FAIL
+            fi
+            ;;
+        : | \?)
+            printf "mole: incorrect or missing script parameter\n" 1>&2
+            exit $FAIL
+            ;;
+    esac
+done
+
+if [ "$OPTIND" -gt 1 ]; then
+    shift "$((OPTIND - 1))"
+fi
+
+if [ "$#" -eq 0 ]; then
+    if [ $LIST_CMD = true ]; then
+        mole_list "$(realpath "$PWD")"
+    elif [ $SECRET_LOG_CMD = true ]; then
+        mole_secret_log
+    else
+        mole "$(realpath "$PWD")"
+    fi
+elif [ "$#" -eq 1 ]; then
+    if [ -f "$1" ]; then
+        open_file "$(realpath "$1")" "$GROUP_ARG"
+    elif [ -d "$1" ]; then
+        if [ $LIST_CMD = true ]; then
+            mole_list "$(realpath "$1")"
+        elif [ $SECRET_LOG_CMD = true ]; then
+            mole_secret_log "$1"
+        else
+            mole "$(realpath "$1")"
+        fi
+    else
+        printf "mole: incorrect directory or file name\n" 1>&2
+        exit $FAIL
+    fi
+elif [ "$#" -gt 1 ]; then
+    mole_secret_log "$@"
+fi
