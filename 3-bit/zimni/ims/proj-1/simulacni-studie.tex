@@ -1,0 +1,228 @@
+% /**
+%  * @file simulacni-studie.tex
+%  * @author David Kvaček (xkvace00@stud.fit.vutbr.cz)
+%  * @brief Project simulation study from the IMS course.
+%  * @date 2023-12-10
+%  */
+
+\documentclass[a4paper, 11pt]{article}
+\usepackage[left=2cm, text={17cm, 25cm}, top=3cm]{geometry}
+\usepackage[czech]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[IL2]{fontenc}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\begin{document}
+
+\begin{titlepage}
+    \begin{center}
+        \includegraphics[scale=0.125]{logo.png} \\
+        \vspace{\stretch{0.382}}
+        \LARGE{Simulační studie projektu z~předmětu IMS} \\
+        \huge{\textbf{SHO Model výroby v~oblasti strojírenství}} \\
+        \LARGE{Tým xkvace00}
+        \vspace{\stretch{0.618}}
+    \end{center}
+
+    \null \Large{\hfill David Kvaček} \\
+    \Large{Brno, \today \hfill \href{mailto:xkvace00@stud.fit.vutbr.cz}{xkvace00@stud.fit.vutbr.cz}}
+\end{titlepage}
+
+\tableofcontents
+
+\newpage
+
+\section{Úvod}
+    V~rámci projektu z~předmětu Modelování a~simulace (IMS) na Fakultě informačních technologií Vysokého učení technického v~Brně je řešena simulační studie zaměřená na model výrobního systému v~oblasti strojírenství.
+    Cílem této studie je analyzovat a~optimalizovat výrobní proces vybraného strojírenského výrobního podniku Stora Enso Wood Products Ždírec s.r.o., přičemž se zaměřuje na jeden specifický produkt.
+    Simulační model bude podrobně zkoumat výrobní linku, tok materiálu a~celkovou součinnost se zaměstnanci.
+
+    Stěžejním úkolem této simulační studie je identifikovat slabá místa v~provozu vybraného podniku a~prostřednictvím experimentů navrhnout úpravy a~změny, které povedou k~efektivnějšímu a~optimalizovanému výrobnímu procesu.
+    To zahrnuje možné změny ve struktuře výrobní linky, kapacitě, a~dalších klíčových aspektech provozu.
+    Tímto způsobem se autoři snaží přinést konkrétní a~aplikovatelné poznatky, které povedou ke zlepšení výrobního systému a~zvýšení jeho efektivity.
+
+\subsection{Autoři práce a~zdroje informací}
+    Autorem této práce je David Kvaček, student třetího ročníku bakalářského studia na Fakultě informačních technologií Vysokého učení technického v~Brně.
+    Odborným konzultantem a~předním dodavatelem zdrojů a~informací je pan Petr Huličník, vedoucí modelovaného úseku výrobního procesu.
+
+    Autor práce čerpal poznatky především z~osobní prohlídky pracoviště pod vedením odborné autority.
+    Následné nejasnosti při vlastní realizaci studie byly řešeny formou poštovní korespondence s~panem Huličníkem, případně se zástupci firemního úseku.
+
+\subsection{Ověření validity modelu}
+    Podstatná část informací pochází přímo od odborného konzultanta vybrané firmy.
+    Tento fakt by měl přispět k~požadované přesnosti simulace a~s ní spojených výstupů, které byly předloženy panu Huličníkovi.
+    Součástí komunikace se zástupci modelovaného úseku výrobní linky byla diskuse výsledků a~statistik, které se ukázaly být poměrně přesné.
+    Na základě tohoto zjištění bylo provedeno porovnání mezi skutečnými, reálnými daty z~prostředí firmy a~simulací, a~tato konfrontace přinesla pro tuto simulační studii zanedbatelné rozdíly.
+
+\newpage
+
+\section{Rozbor tématu a~použitých metod/technologií}
+    Tématem projektu je simulace výrobní linky, tok materiálu a~součinnost s~pracovníky vybrané části linky ve společnosti Stora Enso Wood Products Ždírec s.r.o.
+    Tato firma se zabývá zpracováním dřeva ve všech jeho podobách, je součástí mezinárodního koncernu a~patří mezi světovou špičku ve svém oboru.
+
+    Simulační studie zkoumá jednu specifickou část výrobního procesu.
+    Již zpracované dřevěné hranoly, lišty a~další podobné výrobky směřují po výrobní lince k~modelovanému úseku.
+    Zkoumaný úsek separuje přicházející výrobky (požadavky na zpracování) po určitém počtu takovým způsobem, aby se rozdělené části mohly poskládat na již předem připravené rampy nebo palety.
+
+    Požadavky přicházejí s~určitou četností danou exponenciálním rozložením.
+    Jakmile se provede separace určitého počtu výrobků, následuje proces vložení prokladových lišt na danou vrstvu výrobků.
+    Tuto část výrobního procesu zajišťuje mechanický stroj, který má určitou kapacitu, která udává, kolik prokladových lišt je schopen pojmout.
+    Stroj však nepracuje bezchybně a~v~intervalech daných exponenciálním rozložením nastává porucha, kterou musí uvedený pracovník opravit (délka opravy se rovněž liší podle závažnosti, nicméně z~dlouhodobějšího pozorování plyne, že se jedná v~podstatě také o~dobu danou exponenciálním rozložením).
+
+    Hlavní náplní práce zaměstnance je však doplňování prokladových lišt do již zmíněného mechanického stroje, které se řídí exponenciálním rozložením podle velikosti, délky, tloušťky, či povrchu daných prokladových lišt.
+
+\subsection{Popis použitých postupů}
+    K~popisu modelovaného problému je vhodná diskrétní simulace, jež je také použita.
+    Samotná simulace je implementována v~programovacím jazyce C++ společně s~využitím speciální knihovny SIMLIB, která je k~těmto účelům určena.
+    Abstraktní model simulovaného procesu je navrhnut pomocí Petriho sítě.
+
+\subsection{Popis původu použitých metod/technologií}
+    Implementace simulačního modelu je řešena standardními funkcemi, které poskytuje programovací jazyk C++.
+    Stejně tak je využíána i~zadáním doporučená knihovna SIMLIB.
+    Pro tvorbu abstraktního modelu jsou použity klasické postupy v~rámci modelování pomocí Petriho sítí.
+
+\newpage
+
+\section{Koncepce modelu}
+    Významným cílem simulační studie je zdokumentovat a~následně navrhnout efektivnější využití zdrojů potřebných v~rámci studované části výrobního procesu.
+    Simulace se věnuje pouze části výrobní linky, ve které figurují pracovníci, kteří se aktivně podílejí na chodu firmy.
+
+    Část výrobní linky je vybrána s~ohledem na její variabilitu vůči ostatním fázím výrobního procesu, které jsou ve většině případů řešeny strojově, tzn. bez zásahu pracovníka a~zde by bylo možné zkoumat pouze nastalé poruchy.
+    Z~tohoto důvodu je zvolen kompromis, který však nemá na výslednou studii vážný vliv.
+
+    Model je navržen nejprve s~pomocí Petriho sítě, která obsahuje dva generátory.
+    První generátor vytváří náhodně požadavky přicházející po výrobní lince, které modelují jednotlivé výrobky.
+    Tyto požadavky zabírají obslužnou linku a~odebírají jednu prokladovou lištu ze zásobníku prokladových lišt o~dané kapacitě.
+    Poté požadavek vrací zabranou obslužnou linku a~opouští systém.
+
+    V~případě, že se zásobník prokladových lišt vyprázdní, přichází na řadu zaměstnanec a~určitém časovém úseku doplňuje prokladové lišty na maximální kapacitu.
+
+    Současně však pracuje druhý generátor určený k~simulování poruch obslužné linky.
+    V~momentě, kdy nastane porucha, musí být okamžitě obsloužena pracovníkem.
+    Zároveň je pozastaven proces výrobního požadavku a~po obsloužení poruchy pokračuje výrobní proces v~místě svého přerušení, zatímco obsloužená porucha opouští systém.
+
+\newpage
+
+\section{Architektura simulačního modelu}
+    Simulační program se skládá z~několika částí.
+    Na počátku jsou definovány magické konstanty, které jsou převzaty z~osobních poznatků získaných prostřednictvím komunikace se zástupci úseku firmy.
+    Tyto konstanty jsou rovněž s~jednotlivými experimenty modifikovány pro účel daného zkoumání.
+    Pevně daná je ale doba běhu simulace, která je stanovena na jeden pracovní den, tedy osm hodin (ve zdrojovém souboru 28800 sekund), jelikož každá směna začíná ve stejné fázi, jako ta předchozí, tudíž nemá hlubší význam modelovat více totožných pracovních dní.
+
+    Následně jsou modelovány jednotlivé třídy sloužící k~popisu událostí a~procesů, které se aktivně podílejí na výstupech jednotlivých experimentů.
+
+    Velmi důležitou třídou je \texttt{Request}, která simuluje příchozí výrobní požadavky vstupující do systému.
+    Na samém začátku procesu je kvůli zaznamenávaným statistikám uložen aktuální čas příchodu do systému.
+    Proces zabírá obslužnou linku metodou \texttt{Seize}.
+    Pokud se proces nachází v~obslužné lince, je nutné nejprve zkontrolovat, zda nenastala porucha.
+    V~případě poruchy je proces pozastaven na dobu neurčitou, přičemž je poté aktivován procesem poruchy.
+    Pokud se stane, že je sklad \texttt{InterleaveStore} prázdný, proces čeká určitou dobu, než daný pracovník nenaplní tento sklad zpět na plnou kapacitu.
+    Jinak výrobní požadavek odebírá jednu položku ze skladu prokladových lišt \texttt{InterleaveStore} a~čeká na vyřízení.
+    Nakonec uvolňuje obslužnou linku metodou \texttt{Release} a~úspěšně opouští systém.
+
+    Další významnou třídou je \texttt{Failure}, která je zodpovědná za příchozí poruchy vyskytující se ve výrobním procesu.
+    Na počátku se opět ukládá čas příchodu poruchy pro výsledné statistiky.
+    Okamžikem vzniku poruchy je nastavena globální proměnná \texttt{failure} na hodnotu~\texttt{1}.
+    Tímto příkazem je pozastaven proces výrobního požadavku.
+    Po určité době je porucha opravena, globální proměnná \texttt{failure} nabývá hodnoty \texttt{0}~a~pokud je fronta pozastavených požadavků neprázdná, aktivuje se první proces z~této fronty.
+
+    Následují třídy událostí, které generují výše popsané procesy s~uvedeným exponenciálním rozložením.
+    Hlavní funkce \texttt{main()} inicializuje experiment (jeden pracovní den), spouští činnost generátorů a~startuje samotnou simulaci.
+    Po ukončení již pouze tiskne statistiky na standardní výstup.
+    Vstupy jednotlivých experimentů, tedy odlišné hodnoty magických konstant je nutné změnit přímo ve zdrojovém souboru, tj. není možné je definovat z~příkazové řádky.
+
+\newpage
+
+\section{Podstata simulačních experimentů a~jejich průběh}
+    Experimenty slouží ke zjištění optimálního množství zdrojů potřebných pro odpovídající běh výrobního procesu.
+    Snahou je zjistit, jaká je nejvyšší kapacita výrobní linky, kterou je schopen obsloužit jeden mechanický stroj na prokladové lišty a~současně jeden pracovník obslužné linky.
+
+\subsection{Postup experimentování}
+    Prvním experimentem se ověřuje to, zda simulace odpovídá realitě.
+    Tohoto lze docílit tím způsobem, že se magické konstanty nastaví podle zjištěných informací od odborného konzultanta.
+    Následně se další experimenty provádějí tak, že se postupně upravují jednotlivé magické konstaty a~získávají se užitečné informace o~nastalých změnách, které se dále využívají v~nadcházejících experimentech.
+
+\subsection{Experiment~1}
+    Tímto experimentem byla ověřena validita modelu, jelikož všechny podstatné statistiky v~rozumném měřítku odpovídaly skutečnosti.
+
+    \begin{table}[ht!]
+        \centering
+        \begin{tabular}{|l|c|}
+            \hline
+            Počet požadavků & \textbf{5782} \\ \hline
+            Průměrná vytíženost & \textbf{75.17} \\ \hline
+            Průměrná délka fronty & \textbf{2.00} \\ \hline
+            Maximální délka fronty & \textbf{16} \\ \hline
+            Průměrný čas ve frontě & \textbf{13.39} \\ \hline
+            Maximální čas ve frontě & \textbf{77.75} \\ \hline
+            Počet poruch & \textbf{19} \\ \hline
+            Průměrná doba opravy poruchy & \textbf{10.79} \\ \hline
+            Maximální doba opravy poruchy & \textbf{32.37} \\ \hline
+        \end{tabular}
+        \caption{Statistiky prvního experimentu}
+    \end{table}
+
+\subsection{Experiment~2}
+    Druhý experiment se zaměřuje na maximální vytíženost, tedy větší frekvence příchozích požadavků změnou magické konstanty \texttt{REQUEST\_GENERATOR} o~jedinou sekundu.
+
+    \begin{table}[ht!]
+        \centering
+        \begin{tabular}{|l|c|}
+            \hline
+            Počet požadavků & \textbf{7246} \\ \hline
+            Průměrná vytíženost & \textbf{95.20} \\ \hline
+            Průměrná délka fronty & \textbf{15.15} \\ \hline
+            Maximální délka fronty & \textbf{56} \\ \hline
+            Průměrný čas ve frontě & \textbf{63.36} \\ \hline
+            Maximální čas ve frontě & \textbf{246.52} \\ \hline
+            Počet poruch & \textbf{36} \\ \hline
+            Průměrná doba opravy poruchy & \textbf{15.02} \\ \hline
+            Maximální doba opravy poruchy & \textbf{80.82} \\ \hline
+        \end{tabular}
+        \caption{Statistiky druhého experimentu}
+    \end{table}
+
+\newpage
+
+\subsection{Experiment~3}
+    Následující experiment zjišťuje dopad změny kapacity skladu pro prokladové lišty nastavením magické konstanty \texttt{INTERLEAVE\_STORE\_CAPACITY} na hodnotu \texttt{25}.
+
+    \begin{table}[ht!]
+        \centering
+        \begin{tabular}{|l|c|}
+            \hline
+            Počet požadavků & \textbf{7205} \\ \hline
+            Průměrná vytíženost & \textbf{84.09} \\ \hline
+            Průměrná délka fronty & \textbf{6.45} \\ \hline
+            Maximální délka fronty & \textbf{57} \\ \hline
+            Průměrný čas ve frontě & \textbf{30.66} \\ \hline
+            Maximální čas ve frontě & \textbf{179.87} \\ \hline
+            Počet poruch & \textbf{32} \\ \hline
+            Průměrná doba opravy poruchy & \textbf{18.26} \\ \hline
+            Maximální doba opravy poruchy & \textbf{80.70} \\ \hline
+        \end{tabular}
+        \caption{Statistiky třetího experimentu}
+    \end{table}
+
+\subsection{Experiment~4}
+    Poslední experiment bere v~úvahu všechny provedené experimenty a~nastavuje nejlepší možnou kombinaci magických konstant takovým způsobem, aby byla výrobní linka co nejefektivnější.
+
+    \begin{table}[ht!]
+        \centering
+        \begin{tabular}{|l|c|}
+            \hline
+            Počet požadavků & \textbf{7205} \\ \hline
+            Průměrná vytíženost & \textbf{99.61} \\ \hline
+            Průměrná délka fronty & \textbf{7.23} \\ \hline
+            Maximální délka fronty & \textbf{62} \\ \hline
+            Průměrný čas ve frontě & \textbf{19.74} \\ \hline
+            Maximální čas ve frontě & \textbf{144.50} \\ \hline
+            Počet poruch & \textbf{35} \\ \hline
+            Průměrná doba opravy poruchy & \textbf{14.43} \\ \hline
+            Maximální doba opravy poruchy & \textbf{72.08} \\ \hline
+        \end{tabular}
+        \caption{Statistiky třetího experimentu}
+    \end{table}
+
+\end{document}
