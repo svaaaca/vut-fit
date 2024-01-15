@@ -9,9 +9,9 @@
 #define __MAIN_H__
 
 unsigned int counter = 0;	// Global loop counter
-unsigned int choice = 0;    // Global choice variable
+unsigned int choice = 0;  // Global choice variable
 
-#define GPIO_PIN_MASK 0x1Fu							// Bit-level register manipulation
+#define GPIO_PIN_MASK 0x1Fu							            // Bit-level register manipulation
 #define GPIO_PIN(x) ((1) << ((x) & GPIO_PIN_MASK))	// Bit-level register manipulation
 
 // Letter A
