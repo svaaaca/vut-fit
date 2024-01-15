@@ -1,0 +1,87 @@
+.\ /**
+.\  * @file dhcp-stats.1
+.\  * @author David Kvaček (xkvace00@stud.fit.vutbr.cz)
+.\  * @brief Manual page for the implementation of the dhcp-stats utility.
+.\  * @date 2023-11-20
+.\  */
+
+.TH DHCP-STATS 1 "November 20, 2023" "General Commands Manual"
+.SH NAME
+\fBdhcp-stats\fR \- monitoring DHCP communication
+.SH SYNOPSIS
+.B dhcp-stats
+[\fB\-h\fR] [\fB\-r\fR \fIfilename\fR] [\fB-i\fR \fIinterface-name\fR] \fIip-prefix\fR [ \fIip-prefix\fR [ ... ] ]
+.SH DESCRIPTION
+The \fBdhcp-stats\fR program allows the administrator to obtain statistics about the network \fIip-prefix\fR utilization in terms of the number of allocated IP addresses.
+If the number of allocated addresses in the \fIip-prefix\fR exceeds 50%, 75%, 90% and 95%, the utility informs the administrator on standard output and by logging through the syslog server.
+After the utility starts, it will monitor DHCP traffic on the selected \fIinterface-name\fR, possibly process a pcap \fIfilename\fR, and generate load statistics for network \fIip-prefixes\fR that were specified in the command line.
+There can be multiple \fIip-prefixes\fR and they can overlap \- the reason for the possible overlap is to see what the network load would look like if the \fIip-prefix\fR was larger.
+.TP
+The options are as follows:
+.TP
+.B \-h
+Display a usage message on standard output and exit.
+.TP
+.B \-r \fIfilename\fR
+Statistics will be created from pcap filename.
+.TP
+.B \-i \fIinterface-name\fR
+An interface-name on which the program can listen.
+.TP
+The arguments are as follows:
+.TP
+\fIip-prefix\fR
+Network ip-prefix range for which statistics will be generated.
+.SH EXIT STATUS
+The \fBdhcp-stats\fR utility exits 0 on success, and >0 if an error occurs.
+.SH EXAMPLES
+To process DHCP communication from pcap filename \fIhomenetwork.pcap\fR for the network prefixes \fI192.168.1.0/24\fR, \fI192.168.0.0/22\fR, and \fI172.16.32.0/24\fR:
+.PP
+.nf
+.RS
+\fB$\fR ./dhcp-stats \-r homenetwork.pcap 192.168.1.0/24 192.168.0.0/22 172.16.32.0/24
+.RE
+.fi
+.PP
+To monitor DHCP communication on interface-name \fIeth0\fR for the network prefixes \fI192.168.1.0/24\fR, \fI192.168.0.0/22\fR, and \fI172.16.32.0/24\fR:
+.PP
+.nf
+.RS
+\fB$\fR ./dhcp-stats \-i eth0 192.168.1.0/24 192.168.0.0/22 172.16.32.0/24
+.RE
+.fi
+.SH OUTPUT
+\fB$\fR ./dhcp-stats \-i eth0 192.168.1.0/24 192.168.0.0/22 172.16.32.0/24
+.br
+IP\-Prefix Max\-hosts Allocated addresses Utilization
+.br
+192.168.0.0/22 1022 123 12.04%
+.br
+192.168.1.0/24 254 123 48.43%
+.br
+172.16.32.0/24 254 15 5.9%
+.SH LOGGING
+If the number of allocated addresses in the \fIip-prefix\fR exceeds 50%, 75%, 90% and 95%, the utility logs the following information through the standard syslog mechanism as follows:
+.PP
+.nf
+.RS
+prefix x.x.x.x/y exceeded 50% of allocations
+.br
+prefix x.x.x.x/y exceeded 75% of allocations
+.br
+prefix x.x.x.x/y exceeded 90% of allocations
+.br
+prefix x.x.x.x/y exceeded 95% of allocations
+.RE
+.fi
+.SH IMPLEMENTATION NOTES
+The \fBdhcp-stats\fR utility is written in C programming language.
+The libpcap library is used in the implementation to work with pcap files and to monitor network interfaces.
+For syslog, the standard syslog logging routine is used.
+The \fBdhcp-stats\fR utility assumes that the pcap \fIfilename\fR or network \fIinterface-name\fR will have complete DHCP communication, i.e. as if the utility were running directly on the DHCP server.
+.SH SEE ALSO
+\fBstdio\fR(3), \fBstring\fR(3), \fBgetopt\fR(1), \fBmath\fR(3), \fBpcap\fR(3), \fBinet\fR(3), \fBip\fR(4), \fBudp\fR(4), \fBsyslog\fR(3), \fBncurses\fR(3), \fBsignal\fR(3)
+.SH BUGS
+The \fBdhcp-stats\fR utility does not support IPv6 addresses and DHCPv6 communication.
+DHCPRELEASE, DHCPDECLINE messages and updating network \fIip-prefixes\fR based on lease-time expiration are not supported.
+The \fBdhcp-stats\fR utility also assumes DHCP communication on standard ports 67 and 68.
