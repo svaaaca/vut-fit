@@ -1,0 +1,168 @@
+% /**
+%  * @file dokumentace.tex
+%  * @author David Kvaček (xkvace00@stud.fit.vutbr.cz)
+%  * @brief Project documentation from the IMP course.
+%  * @date 2023-12-15
+%  */
+
+\documentclass[a4paper, 11pt]{article}
+\usepackage[left=2cm, text={17cm, 25cm}, top=3cm]{geometry}
+\usepackage[czech]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[IL2]{fontenc}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\begin{document}
+
+\begin{titlepage}
+    \begin{center}
+        \includegraphics[scale=0.125]{logo.png} \\
+        \vspace{\stretch{0.382}}
+        \LARGE{Dokumentace projektu z~předmětu IMP} \\
+        \huge{\textbf{ARM-FITkit3 či jiný HW: Světelná tabule}} \\
+        \vspace{\stretch{0.618}}
+    \end{center}
+
+    \null \Large{\hfill vedoucí: Ing. Václav Šimek} \\
+    \null \Large{\hfill \href{mailto:simekv@fit.vutbr.cz}{simekv@fit.vutbr.cz}} \\
+    \null \\
+    \null \Large{\hfill autor: David Kvaček} \\
+    \Large{Brno, \today \hfill \href{mailto:xkvace00@stud.fit.vutbr.cz}{xkvace00@stud.fit.vutbr.cz}}
+\end{titlepage}
+
+\tableofcontents
+
+\newpage
+
+\section{Úvod}
+    Předmětem projektu je návrh a~následná realizace vestavěné aplikace na platformě FITkit3, jehož součástí je zabudovaný mikrokontroler Kinetis K60 fy NXP s~jádrem ARM Cortex-M4.
+    Zobrazovací komponentou je přípravek Maticový displej, který slouží jako tzv. světelná tabule.
+
+    Rozšiřující modul Maticový displej, obsahující dva maticové LED displeje, se vzájemně propojí s~platformou FITkit3 pomocí přiloženého návodu.
+    Výstupem aplikace je zobrazení tzv. běžícího textu definovaného na platformě FITkit3 a~vyprodukovaného prostřednictvím přípravku Maticový displej.
+
+\newpage
+
+\section{Příprava}
+    Cílem zadání je vytvořit funkční aplikaci, která umožní zobrazení krátké zprávy formou tzv. běžícího textu na přípravku Maticový displej.
+    Text zprávy je vykreslován postupně po jednotlivých sloupcích směrem zprava doleva.
+
+\subsection{Vzájemné propojení komponent}
+    Zpočátku je nutné provést prvotní přípravu všech komponent a~modulů, které je potřeba vzájemně propojit.
+    Dvě nejdůležitější součásti, tedy FITkit3~\cite{fitkit3} a~Maticový displej, se propojí pomocí konektoru P1 platformy FITkit3 a~konektoru P3 rozšiřujícího modulu Maticový displej~\cite{zadani}.
+
+\subsection{Připojení platformy k~napájení}
+    Dalším nutným krokem je připojení platformy FITkit3 ke zdroji napájení.
+    Samotné zapojení má za následek provedení již předem nahraného programu na platformě FITkit3.
+    K~nahrání nové verze aplikace je zapotřebí připojit celou periferii k~počítači, kde je nainstalované vývojové prostředí Kinetis Design Studio, nejlépe ve verzi 3.0.0~\cite{kds}.
+
+    V~rámci tohoto projektu je platforma FITkit3 společně s~rozšiřovacím modulem Maticový displej připojena k~počítači pomocí kabelu USB-B, který se obecně používá k~propojení tiskárny s~počítačem.
+    Nutno podotknout, že jakýkoliv použitý propojovací kabel musí být datový, nikoliv pouze napájecí (nezbytné pro přenos zdrojového kódu aplikace).
+
+\subsection{Založení projektu v~KDS}
+    V~tomto okamžiku je na řadě založení nového projektu v~prostředí Kinetis Design Studio v3.0.0 pro odpovídající mikrokontroler Kinetis K60.
+    Následující částí je přizpůsobení debugování vytvořeného projektu, které má za úkol ulehčit práci s~následným krokováním programu.
+    Nyní je potřeba identifikovat připojené periferie na určitém rozhraní USB, aby bylo možné přehrát vytvořený program na platformu FITkit3.
+    
+    Po úspěšné přípravě veškerého prostředí, potřebného k~vývoji samotné aplikace, je další částí již zmíněná implementace vlastního řešení.
+
+\newpage
+
+\section{Způsob realizace}
+    Aplikace je vytvořena v~rámci prostředí Kinetis Design Studio v3.0.0, pro vlastní vývoj je zvolen programovací jazyk~\texttt{C}.
+    Část řešení je inspirována vzorovým projektem, který je určen k~prvotnímu otestování funkčnosti všech periferiií, modulů a~vybavení \cite{vzor}.
+    Převzat je princip inicializace hardwaru implementovaný ve zdrojovém souboru \texttt{main.c}, konkrétně ve funkci \texttt{init()}.
+    Jedná se především o~konfiguraci jednotlivých pinů mikrokontroleru.
+    Další funkcí, která je téměř totožná se vzorovým projektem, je funkce \texttt{column\_select()} sloužící k~výběru sloupce.
+
+\subsection{Ovládání displeje}
+    Zobrazování jednotlivých LED diod na Maticovém displeji je implementováno pomocí tzv. multiplexingu~\cite{manual} takovým způsobem, že se volí samostatné LED diody, které se mají rozsvítit.
+    Pro zvolení sloupce se volí číslo v~rozsahu \texttt{0}~až \texttt{15}, jedná se tedy o~čtyřbitové číslo.
+    
+    V~případě jednotlivých řádků a~toho, jaké LED diody mají svítit ve vybraném sloupci, se využívá funkce \texttt{row\_select()}.
+    Jediným argumentem této funkce je číslo v~rozmezí od \texttt{0}~do \texttt{255}.
+    Toto osmibitové číslo zahrnuje všechny možné kombinace, které lze v~daném sloupci aplikovat.
+
+\subsection{Modul časovače}
+    Jednou z~náležitostí projektu je využití vestavěných součástí či periferních modulů mikrokontroleru.
+    Tento požadavek je splněn podporou modulu časovače PIT na kanálu číslo~\texttt{0}.
+    Časovač je schopen ve stanovených intervalech periodicky produkovat přerušení.
+    Zmiňovaný interval lze nastavit nahráním požadované hodnoty do registru \texttt{LDVAL}.
+
+    Pokud je detekováno přerušení, musí být obslouženo.
+    V~tomto případě se jedná o~obsluhu displeje, tzn. při každém přerušení se zobrazuje jeden zvolený sloupec přípravku Maticový displej s~odpovídajícím nastavením řádků.
+    Obsluha daného přerušení zahrnuje také mj. jeho \textit{vyčištění} (do odpovídajícího registru přerušení se vloží hodnota \texttt{1}, viz \textit{write 1~to clear} [\texttt{w1c}] referenčního manuálu \cite{manual}).
+
+    Součástí funkce pro obsluhu přerušení \texttt{PIT0\_IRQHandler()} je inkrementace globální proměnné (čítač \texttt{counter}), který je následně využitý v~hlavní funkci celého programu pro zobrazování jednotlivých LED diod na displeji.
+
+\subsection{Zobrazování textu}
+\label{text}
+    Vlastní text zpráv a~jeho jednotlivé části znaků jsou zobrazovány hlavní funkcí \texttt{main()}.
+    Tok programu je řízen hodnotou v~globálním čítači \texttt{counter}.
+    Jelikož se nepodařilo implementovat periodické procházení definovaného pole s~předem inicializovaným textem zprávy, je nutné provádět rozsvěcení LED diod iterativně, což mnohonásobně zkomplikovalo realizaci a~čitelnost zdrojového kódu.
+
+    Nicméně není jiná možnost, jak zobrazit tzv. běžící text.
+    Proto se postupně, po jednotlivých krocích, prochází definovanými znaky, které se rozkládají vždy do pěti částí (sloupců).
+    Pro každou možnou hodnotu čítače je předem definovaný sloupec a~řádky, které mají v~tu danou dobu svítit.
+    Tento scénář se opakuje pro tři různé texty v~nekonečné hlavní smyčce programu.
+    Nutno podotknout, že hodnota čítače se inkrementuje vždy v~případě identifikovaného přerušení PIT.
+
+    Tento způsob řešení rozhodně není příliš efektivní, ale jedná se o~funkční aplikaci, což je hlavním cílem tohoto projektu.
+
+\newpage
+
+\section{Funkčnost a~vlastnosti řešení}
+    Vlastní realizace zadání je poměrně komplikovaná a~navíc ve srovnání s~navrhovaným řešením značně překombinovaná.
+    Co se týče funkčnosti samotného programu, tak se podařilo implementovat hlavní cíl projektu, tedy zobrazit předem definovaný text jako tzv. běžící.
+    Směr zobrazování sloupců postupně zprava doleva s~využitím tzv. multiplexingu je taktéž splněn.
+    Rovněž je použit modul časovače pro posun mezi samostatnými znaky v~rámci zobrazovaného textu zprávy.
+
+\subsection{Zobrazování jednotlivých zpráv}
+    Součástí zdrojového kódu je definice tří různých textů jednotlivých zpráv, mezi kterými si však uživatel nemá možnost vybírat podle vlastního výběru.
+    Důvodem tohoto omezení je fakt, že pro takto nízký počet zpráv není vážný záměr tuto funkčnost podporovat.
+
+    Naopak je v~této souvislosti zobrazování více zpráv řešeno jednodušeji s~ohledem na uživatele aplikace.
+    Předem definované texty zpráv se zobrazují na displeji opakovaně a~postupně bez nutnosti uživatelské interakce.
+
+\subsection{Definice vlastních zpráv (UART komunikace)}
+    Komunikace s~platformou FITkit3 prostřednictvím přístupového terminálu a~následná definice vlastního textu zprávy pomocí sériového terminálu (UART komunikace) není podporována z~důvodu komplikovaného řešení zobrazování běžícího textu popsaného v~kapitole \ref{text}.
+
+\subsection{Demonstrační video}
+    Odkaz na demonstrační video na YouTube zde: \href{https://youtu.be/twR2K3eeFa0}{\texttt{https://youtu.be/twR2K3eeFa0}}.
+
+\subsection{Autoevaluace}
+    \begin{itemize}
+        \item Funkčnost (\texttt{F}) -- požadovaná funkčnost zadáním je dosažena (5 b.)
+        \item Kvalita (\texttt{Q}) -- řešení je snadno ovladatelné, ale poměrně nepřehledné (1 b.)
+        \item Prezentace (\texttt{P}) -- ukázka je připravená a~přehledná (1 b.)
+        \item Dokumentace (\texttt{D}) -- manuál poskytuje všechny adekvátní informace ke způsobu řešení (3 b.)
+        \item Přístup (\texttt{E}) -- snaha o~kvalitní řešení je nicméně znehodnocena nepřehledností (0 b.)
+    \end{itemize}
+
+    \begin{center}
+        $\sum = (0.25 + 0.75 \cdot 5/5) \cdot (5 + 1 + 1 + 3 + 0) = \textbf{10 b.}$
+    \end{center}
+
+\newpage
+
+\section{Závěr}
+    Výsledným řešením projektu je funkční aplikace umožňující zobrazení zprávy formou tzv. běžícího textu.
+    Výsledný text je podle zadání zobrazován ve směru zprava doleva.
+    V~rámci implementace je využíván tzv. multiplexing pro zobrazování jednotlivých sloupců Maticového displeje.
+
+    Součástí zdrojového kódu je také definice tří odlišných zpráv, které se periodicky zobrazují postupně jedna po druhé bez nutnosti uživatelské interakce.
+    Definice vlastních zpráv přes sériový terminál a~UART komunikace není podporována.
+
+    Na základě zadání projektu je obsluha a~zobrazování jednotlivých sloupců a~řádků na Maticovém displeji realizována pomocí periferního modulu časovače, čímž se implementace zdárně vyhýbá užití aktivního čekání.
+
+    Průběh testování neodhalil žádné vážné nedostatky a~projekt jako celek splňuje většinu základních požadavků stanovených zadáním.
+
+\newpage
+
+\section{Literatura}
+\bibliographystyle{czechiso}
+\renewcommand{\refname}{}
+\bibliography{dokumentace}
+
+\end{document}
