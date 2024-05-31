@@ -1,0 +1,492 @@
+/*
+ * Login: xkvace00
+ *
+ * Doplnte sve reseni.
+ *
+ * Nezapomente pridat strucne hromadne komentare pro pravidla jednotlivych sekci
+ * a pro netrivialni useky kodu.
+ *
+ * Snazte se dodat aspon castecne reseni, i snaha se hodnoti.
+ */
+
+@font-face {
+   font-family: 'Textile';
+   src: url("../fonts/textile.ttf") format("truetype");
+}
+
+* {
+   box-sizing: border-box;
+   padding: 0;
+   margin: 0;
+}
+
+body {
+   background-image: url("../img/bg/bg-body.svg");
+   font-family: 'Spectral', serif;
+   font-size: 16px;
+   margin: 0 auto;
+   min-width: 768px;
+   width: 100%;
+}
+
+h2 {
+   font-family: 'Calistoga', sans-serif;
+   font-size: 24px;
+   letter-spacing: 0.2rem;
+}
+
+header {
+   display: flex;
+   flex-direction: column;
+   position: relative;
+}
+
+section {
+   min-width: 768px;
+   padding-top: 100px;
+   padding-bottom: 160px;
+}
+
+.heading {
+   text-align: center;
+}
+
+.heading h2 {
+   color: green;
+   font-size: 20px;
+   text-transform: uppercase;
+}
+
+.heading span {
+   font-family: 'Textile', serif;
+   font-size: 24px;
+}
+
+.video-player {
+   text-align: center;
+}
+
+#heyoooo {
+   display: none;
+}
+
+img {
+   max-width: 10%;
+}
+
+/*
+ * ----------------------------------------------------------------
+ *                           HEADER-TITLE
+ * ----------------------------------------------------------------
+ */
+
+#header-title {
+   background-attachment: fixed;
+   background-image: url("../img/bg/bg-header.jpg");
+   background-position: center;
+   background-repeat: no-repeat;
+   background-size: cover;
+   color: white;
+   font-family: 'Calistoga', sans-serif;
+   margin-bottom: 164px;
+   order: -1;
+   text-align: center;
+}
+
+#header-title span:nth-child(1) {
+   display: block;
+   font-size: 128px;
+   line-height: 128px;
+   margin-top: 128px;
+   text-shadow: 4px 2px 4px green;
+   text-transform: uppercase;
+}
+
+#header-title span:nth-child(1)::before {
+   background-image: url("../img/custom/flag.svg");
+   background-size: cover;
+   content: "";
+   display: inline-block;
+   filter: drop-shadow(green);
+   height: 86px;
+   left: 86px;
+   position: relative;
+   top: 100px;
+   width: 86px;
+}
+
+#header-title span:nth-child(1)::after {
+   background-image: url("../img/custom/flag.svg");
+   background-size: cover;
+   content: "";
+   display: inline-block;
+   filter: drop-shadow(green);
+   height: 86px;
+   position: relative;
+   right: 86px;
+   top: 100px;
+   transform: rotateY(180deg);
+   width: 86px;
+}
+
+#header-title span:nth-child(2) {
+   display: block;
+   font-size: 64px;
+   line-height: 64px;
+   text-shadow: 4px 2px 4px green;
+   text-transform: uppercase;
+}
+
+#header-title span:nth-child(3) {
+   display: block;
+   font-size: 16px;
+   line-height: 16px;
+   text-shadow: 4px 2px 4px green;
+   text-transform: uppercase;
+}
+
+#header-title span:nth-child(4) {
+   display: block;
+   font-family: 'Textile', serif;
+   font-size: 32px;
+   line-height: 64px;
+   margin-bottom: 256px;
+   text-shadow: 4px 2px 4px green;
+}
+
+#header-title span:nth-child(4)::before, #header-title span:nth-child(4)::after {
+   content: "\"";
+   font-family: 'Textile', serif;
+   font-size: 32px;
+   line-height: 64px;
+   text-shadow: 4px 2px 4px green;
+}
+
+/*
+ * ----------------------------------------------------------------
+ *                            HEADER-MENU
+ * ----------------------------------------------------------------
+ */
+
+#header-menu {
+   position: relative;
+}
+
+#header-menu::before {
+   background-size: cover;
+   bottom: 164px;
+   content: url("../img/custom/beers.png");
+   height: 1px auto;
+   left: 0;
+   overflow-x: hidden;
+   position: absolute;
+   width: 100%;
+}
+
+#header-menu nav {
+   margin-left: 256px;
+   margin-right: 256px;
+   max-width: 1200px;
+}
+
+#header-menu ul {
+   border-bottom: 1px dashed green;
+   border-top: 1px dashed green;
+   column-gap: 32px;
+   display: grid;
+   font-size: 20px;
+   font-weight: bold;
+   grid-template-areas: "first second third fourth fifth sixth seventh";
+   grid-template-columns: repeat(7, 1fr);
+   list-style-type: none;
+   position: relative;
+   text-align: center;
+   text-transform: uppercase;
+}
+
+#header-menu ul li {
+   margin: auto;
+   text-align: center;
+}
+
+#header-menu ul li a {
+   color: black;
+   text-decoration: none;
+}
+
+#header-menu ul li a:hover {
+   color: green;
+}
+
+#header-menu ul::after {
+   content: url("../img/custom/leaf.svg");
+   grid-area: fourth;
+   transform: rotateY(180deg) rotate(270deg) scale(0.5);
+}
+
+/*
+ * ----------------------------------------------------------------
+ *                              ABOUT
+ * ----------------------------------------------------------------
+ */
+
+#about {
+   background-color: white;
+   border-left: 1px dashed green;
+   border-right: 1px dashed green;
+   margin-left: auto;
+   margin-right: auto;
+   max-width: 1200px;
+}
+
+/*
+ * ----------------------------------------------------------------
+ *                               TEAM
+ * ----------------------------------------------------------------
+ */
+
+#team {
+   background-image: url("../img/bg/bg-team.jpg");
+   background-size: contain;
+   margin-left: auto;
+   margin-right: auto;
+   position: relative;
+}
+
+#team > div {
+   margin: 0 auto;
+   max-width: 1200px;
+}
+
+#team h2 {
+   color: lightgreen;
+}
+
+#team span {
+   color: white;
+}
+
+#team::before {
+   background-size: cover;
+   top: -42px;
+   content: url("../img/custom/hr.svg");
+   height: 1px auto;
+   left: 0;
+   overflow-x: hidden;
+   position: absolute;
+   width: 100%;
+}
+
+/*
+ * ----------------------------------------------------------------
+ *                              EVENTS
+ * ----------------------------------------------------------------
+ */
+
+#events {
+   margin-left: auto;
+   margin-right: auto;
+   position: relative;
+}
+
+#events > div {
+   margin: 0 auto;
+   max-width: 1200px;
+}
+
+#events::before {
+   background-size: cover;
+   top: -42px;
+   content: url("../img/custom/hr.svg");
+   height: 1px auto;
+   left: 0;
+   overflow-x: hidden;
+   position: absolute;
+   width: 100%;
+}
+
+/*
+ * ----------------------------------------------------------------
+ *                               MENU
+ * ----------------------------------------------------------------
+ */
+
+#menu {
+   background-image: url("../img/bg/bg-menu.jpg");
+   background-size: cover;
+   margin-left: auto;
+   margin-right: auto;
+   position: relative;
+}
+
+#menu > div {
+   margin: 0 auto;
+   max-width: 1200px;
+}
+
+#menu h2 {
+   color: lightgreen;
+}
+
+#menu span {
+   color: white;
+}
+
+#menu::before {
+   background-size: cover;
+   top: -42px;
+   content: url("../img/custom/hr.svg");
+   height: 1px auto;
+   left: 0;
+   overflow-x: hidden;
+   position: absolute;
+   width: 100%;
+}
+
+/*
+ * ----------------------------------------------------------------
+ *                              SERVICES
+ * ----------------------------------------------------------------
+ */
+
+#services {
+   margin-left: auto;
+   margin-right: auto;
+   position: relative;
+}
+
+#services > div {
+   margin: 0 auto;
+   max-width: 1200px;
+}
+
+#services::before {
+   background-size: cover;
+   top: -42px;
+   content: url("../img/custom/hr.svg");
+   height: 1px auto;
+   left: 0;
+   overflow-x: hidden;
+   position: absolute;
+   width: 100%;
+}
+
+/*
+ * ----------------------------------------------------------------
+ *                              CONTACT
+ * ----------------------------------------------------------------
+ */
+
+#contact {
+   background-image: url("../img/bg/bg-contact.jpg");
+   background-size: cover;
+   margin-left: auto;
+   margin-right: auto;
+   position: relative;
+}
+
+#contact > div {
+   margin: 0 auto;
+   max-width: 1200px;
+}
+
+#contact h2 {
+   color: lightgreen;
+}
+
+#contact span {
+   color: white;
+}
+
+#contact::before {
+   background-size: cover;
+   top: -42px;
+   content: url("../img/custom/hr.svg");
+   height: 1px auto;
+   left: 0;
+   overflow-x: hidden;
+   position: absolute;
+   width: 100%;
+}
+
+#contact::after {
+   background-size: cover;
+   bottom: -42px;
+   content: url("../img/custom/hr.svg");
+   height: 1px auto;
+   left: 0;
+   overflow-x: hidden;
+   position: absolute;
+   width: 100%;
+}
+
+/*
+ * ----------------------------------------------------------------
+ *                              FOOTER
+ * ----------------------------------------------------------------
+ */
+
+footer {
+   margin-left: auto;
+   margin-right: auto;
+   padding-bottom: 64px;
+   padding-top: 64px;
+   position: relative;
+}
+
+footer > div {
+   background-image: url("../img/custom/gang.svg");
+   background-repeat: no-repeat;
+   background-size: 25%;
+   margin: 0 auto;
+   max-width: 1200px;
+}
+
+footer .section-content span {
+   color: black;
+   font-weight: bold;
+}
+
+footer .section-content span a {
+   color: black;
+   text-decoration: none;
+}
+
+/*
+ * ----------------------------------------------------------------
+ *                            REFERENCES
+ * ----------------------------------------------------------------
+ */
+
+.references li {
+   display: inline;
+   list-style-type: none;
+}
+
+.references li a {
+   display: inline;
+   font-size: 0;
+   visibility: hidden;
+}
+
+.references li a::before {
+   color: green;
+   content: "\f005";
+   display: inline;
+   font-family: 'Font Awesome 6 Free';
+   font-size: 16px;
+   font-weight: 900;
+   margin-right: 8px;
+   visibility: visible;
+}
+
+/*
+ * ----------------------------------------------------------------
+ *                               NAME
+ * ----------------------------------------------------------------
+ */
+
+.name {
+   font-size: 20px;
+   font-style: italic;
+}
