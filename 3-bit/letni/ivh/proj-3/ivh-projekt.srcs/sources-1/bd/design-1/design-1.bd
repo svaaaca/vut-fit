@@ -1,0 +1,177 @@
+{
+  "design": {
+    "design_info": {
+      "boundary_crc": "0x7DA723726F518A4E",
+      "device": "xc7z020clg400-1",
+      "gen_directory": "../../../../ivh_projekt.gen/sources_1/bd/design_1",
+      "name": "design_1",
+      "rev_ctrl_bd_flag": "RevCtrlBdOff",
+      "synth_flow_mode": "Hierarchical",
+      "tool_version": "2023.2",
+      "validated": "true"
+    },
+    "design_tree": {
+      "clk_wiz_0": "",
+      "top_0": ""
+    },
+    "ports": {
+      "sysclk": {
+        "type": "clk",
+        "direction": "I",
+        "parameters": {
+          "CLK_DOMAIN": {
+            "value": "design_1_sysclk",
+            "value_src": "default"
+          },
+          "FREQ_HZ": {
+            "value": "20000000"
+          },
+          "FREQ_TOLERANCE_HZ": {
+            "value": "0",
+            "value_src": "default"
+          },
+          "INSERT_VIP": {
+            "value": "0",
+            "value_src": "default"
+          },
+          "PHASE": {
+            "value": "0.0",
+            "value_src": "default"
+          }
+        }
+      },
+      "row": {
+        "direction": "O",
+        "left": "7",
+        "right": "0"
+      },
+      "col": {
+        "direction": "O",
+        "left": "7",
+        "right": "0"
+      },
+      "led": {
+        "direction": "O",
+        "left": "3",
+        "right": "0"
+      }
+    },
+    "components": {
+      "clk_wiz_0": {
+        "vlnv": "xilinx.com:ip:clk_wiz:6.0",
+        "ip_revision": "13",
+        "xci_name": "design_1_clk_wiz_0_0",
+        "xci_path": "ip\\design_1_clk_wiz_0_0\\design_1_clk_wiz_0_0.xci",
+        "inst_hier_path": "clk_wiz_0",
+        "parameters": {
+          "CLKIN1_JITTER_PS": {
+            "value": "500.0"
+          },
+          "CLKOUT1_JITTER": {
+            "value": "353.847"
+          },
+          "CLKOUT1_PHASE_ERROR": {
+            "value": "301.005"
+          },
+          "CLKOUT1_REQUESTED_OUT_FREQ": {
+            "value": "25"
+          },
+          "MMCM_CLKFBOUT_MULT_F": {
+            "value": "50.000"
+          },
+          "MMCM_CLKIN1_PERIOD": {
+            "value": "50.000"
+          },
+          "MMCM_CLKIN2_PERIOD": {
+            "value": "10.0"
+          },
+          "MMCM_CLKOUT0_DIVIDE_F": {
+            "value": "40.000"
+          },
+          "PRIM_IN_FREQ": {
+            "value": "20.000"
+          }
+        }
+      },
+      "top_0": {
+        "vlnv": "xilinx.com:module_ref:top:1.0",
+        "ip_revision": "1",
+        "xci_name": "design_1_top_0_0",
+        "xci_path": "ip\\design_1_top_0_0\\design_1_top_0_0.xci",
+        "inst_hier_path": "top_0",
+        "reference_info": {
+          "ref_type": "hdl",
+          "ref_name": "top",
+          "boundary_crc": "0x0"
+        },
+        "ports": {
+          "clk": {
+            "type": "clk",
+            "direction": "I",
+            "parameters": {
+              "FREQ_HZ": {
+                "value": "25000000",
+                "value_src": "ip_prop"
+              },
+              "PHASE": {
+                "value": "0.0",
+                "value_src": "ip_prop"
+              },
+              "CLK_DOMAIN": {
+                "value": "/clk_wiz_0_clk_out1",
+                "value_src": "ip_prop"
+              }
+            }
+          },
+          "col": {
+            "direction": "O",
+            "left": "7",
+            "right": "0"
+          },
+          "led": {
+            "direction": "O",
+            "left": "3",
+            "right": "0"
+          },
+          "row": {
+            "direction": "O",
+            "left": "7",
+            "right": "0"
+          }
+        }
+      }
+    },
+    "nets": {
+      "clk_in1_0_1": {
+        "ports": [
+          "sysclk",
+          "clk_wiz_0/clk_in1"
+        ]
+      },
+      "clk_wiz_0_clk_out1": {
+        "ports": [
+          "clk_wiz_0/clk_out1",
+          "top_0/clk"
+        ]
+      },
+      "top_0_col": {
+        "ports": [
+          "top_0/col",
+          "col"
+        ]
+      },
+      "top_0_led": {
+        "ports": [
+          "top_0/led",
+          "led"
+        ]
+      },
+      "top_0_row": {
+        "ports": [
+          "top_0/row",
+          "row"
+        ]
+      }
+    }
+  }
+}
