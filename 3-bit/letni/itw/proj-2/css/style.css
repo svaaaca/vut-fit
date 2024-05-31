@@ -1,0 +1,646 @@
+/* 
+ * @file style.css
+ * @author David Kvaček (xkvace00@stud.fit.vutbr.cz)
+ * @brief Source code for the stylesheet of the website (CSS).
+ * @date 2024-04-26
+ */
+
+/* ************************************************************************* */
+/*                                 GENERAL                                   */
+/* ************************************************************************* */
+
+/* Custom color scheme definition. */
+:root {
+    --first-color: #313975;
+    --second-color: #7D83B0;
+    --third-color: #535A92;
+    --fourth-color: #182058;
+    --fifth-color: #080E3B;
+}
+
+/* Set the default box model for all elements. */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Enable smooth scrolling for the whole page. */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Set the font family for the whole website. */
+body {
+    background-color: var(--third-color);
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+}
+
+/* Style the h1 heading. */
+h1 {
+    text-transform: uppercase;
+}
+
+/* Style the h3 heading. */
+h3 {
+    color: var(--first-color);
+    text-shadow: 1px 1px 1px var(--fourth-color);
+}
+
+/* Place the top navigation menu fixed. */
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+/* Set the default style for links. */
+a {
+    text-decoration: none;
+}
+
+/* Style the button element. */
+button {
+    background-color: var(--fourth-color);
+    border: 2px solid var(--fourth-color);
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 32px;
+    margin-top: 16px;
+    padding: 8px 16px;
+    text-transform: uppercase;
+    transition-duration: 0.64s;
+}
+
+/* Set the button hover effect. */
+button:hover {
+    background-color: white;
+    border: 2px solid var(--fourth-color);
+    color: var(--fourth-color);
+}
+
+/* ************************************************************************* */
+/*                           TOP NAVIGATION MENU                             */
+/* ************************************************************************* */
+
+/* Style the top navigation menu. */
+.top-nav-menu {
+    background-color: var(--fifth-color);
+    overflow: hidden;
+    position: relative;
+}
+
+/* Hide the links inside the navigation menu. */
+.top-nav-menu #menu-link {
+    display: none;
+}
+
+/* Style navigation menu links. */
+.top-nav-menu a {
+    color: white;
+    display: block;
+    font-size: 16px;
+    padding: 16px 16px;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition-duration: 0.64s;
+}
+
+/* Style the hamburger menu. */
+.top-nav-menu a.icon {
+    background-color: var(--fifth-color);
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+/* Add a background color on mouse-over. */
+.top-nav-menu a:hover {
+    background-color: var(--first-color);
+}
+
+/* Style the active link. */
+.active {
+    background-color: var(--fifth-color);
+}
+
+/* Add pseudo-element (icon) before the home link. */
+#nav-home::before {
+    content: "\f015";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-right: 8px;
+    width: 100%;
+}
+
+/* Add pseudo-element (icon) before the about link. */
+#nav-about::before {
+    content: "\f007";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-right: 8px;
+    width: 100%;
+}
+
+/* Add pseudo-element (icon) before the experience link. */
+#nav-experience::before {
+    content: "\f0b1";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-right: 8px;
+    width: 100%;
+}
+
+/* Add pseudo-element (icon) before the education link. */
+#nav-education::before {
+    content: "\f19d";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-right: 8px;
+    width: 100%;
+}
+
+/* Add pseudo-element (icon) before the skills link. */
+#nav-skills::before {
+    content: "\f5b0";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-right: 8px;
+    width: 100%;
+}
+
+/* Add pseudo-element (icon) before the interests link. */
+#nav-interests::before {
+    content: "\f06e";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-right: 8px;
+    width: 100%;
+}
+
+/* ************************************************************************* */
+/*                                SECTIONS                                   */
+/* ************************************************************************* */
+
+/* Add padding to the top of all sections. */
+section {
+    padding-top: 64px;
+}
+
+/* Style the section header text. */
+.section-header {
+    color: var(--fourth-color);
+    font-family: 'Itim', cursive;
+    font-size: 32px;
+    padding-bottom: 64px;
+}
+
+/* Style the main header text. */
+.main-header {
+    color: var(--fourth-color);
+    font-family: 'Itim', cursive;
+    font-size: 64px;
+    padding-bottom: 64px;
+}
+
+/* Set the center alignment of an element. */
+.center {
+    text-align: center;
+}
+
+/* Set the gap between elements. */
+.about-gap, .education-gap {
+    margin-top: 16px;
+}
+
+/* Set the extra gap between elements. */
+.button-gap {
+    margin-top: 32px;
+}
+
+/* Style the paragraph text. */
+.text {
+    margin: 32px;
+    text-align: justify;
+}
+
+/* Style the content to justify. */
+.content {
+    margin-bottom: auto;
+    margin-bottom: 16px;
+    margin-top: 16px;
+    text-align: justify;
+}
+
+/* ************************************************************************* */
+/*                              SECTION ABOUT                                */
+/* ************************************************************************* */
+
+/* Style the about section. */
+#about {
+    background-image: url("../img/bg.png");
+    background-repeat: round;
+    background-size: auto;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-top: 64px;
+    padding-bottom: 64px;
+    padding-top: 128px;
+}
+
+/* Set an element to the button appearance. */
+.email-button {
+    background-color: var(--first-color);
+    border-radius: 8px;
+    color: white;
+    padding: 8px 16px;
+    transition-duration: 0.64s;
+}
+
+/* Set the button hover effect. */
+.email-button:hover {
+    background-color: var(--third-color);
+}
+
+/* Add pseudo-element (icon) before address. */
+.address::before {
+    content: "\f3c5";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-right: 8px;
+    width: 100%;
+}
+
+/* Add pseudo-element (icon) before phone. */
+.phone::before {
+    content: "\f095";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-right: 8px;
+    width: 100%;
+}
+
+/* Add pseudo-element (icon) before email. */
+.email::before {
+    content: "\f0e0";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-right: 8px;
+    width: 100%;
+}
+
+/* Set an element to the button appearance. */
+.social-button {
+    background-color: white;
+    border: 2px solid var(--first-color);
+    border-radius: 8px;
+    color: var(--first-color);
+    display: inline-block;
+    margin-top: 8px;
+    padding: 8px;
+    transition-duration: 0.64s;
+}
+
+/* Set the button hover effect. */
+.social-button:hover {
+    background-color: var(--first-color);
+    color: white;
+}
+
+/* ************************************************************************* */
+/*                            SECTION EXPERIENCE                             */
+/* ************************************************************************* */
+
+/* Style the experience section. */
+#experience {
+    background-image: url("../img/bg.png");
+    background-repeat: round;
+    background-size: auto;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    margin-left: 8px;
+    margin-right: 8px;
+    padding-bottom: 64px;
+}
+
+/* Style the experience card. */
+.card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    margin: 16px;
+    padding: 16px;
+}
+
+/* Style the text with company name. */
+.company {
+    color: var(--first-color);
+    text-align: right;
+}
+
+/* Style the company button. */
+.card-link {
+    color: var(--fourth-color);
+    text-decoration: none;
+    padding-bottom: 2px;
+    position: relative;
+}
+
+/* Add pseudo-element (underline) before the card link. */
+.card-link::before {
+    background-image: linear-gradient(90deg, var(--fourth-color), var(--fourth-color));
+    background-position: left bottom;
+    background-repeat: no-repeat;
+    background-size: 0 2px;
+    bottom: 0;
+    content: "";
+    position: absolute;
+    top: 0;
+    transition: background-size 0.64s ease-in;
+    width: 100%;
+}
+
+/* Set the card link hover effect. */
+.card-link:hover::before {
+    background-size: 100% 2px;
+}
+
+/* Add pseudo-element (icon) after the card link. */
+.card-link::after {
+    content: "\f105";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-left: 4px;
+    width: 100%;
+}
+
+/* Set the image behavior. */
+.card-image {
+    height: auto;
+    margin-top: 16px;
+    width: 128px;
+}
+
+/* Set the left float direction. */
+.left {
+    float: left;
+    margin-right: 16px;
+}
+
+/* Set the right float direction. */
+.right {
+    float: right;
+    margin-left: 16px;
+}
+
+/* Style the text with job dates. */
+.from-to {
+    color: var(--fifth-color);
+    font-weight: bold;
+    text-align: center;
+}
+
+/* ************************************************************************* */
+/*                            SECTION EDUCATION                              */
+/* ************************************************************************* */
+
+/* Style the education section. */
+#education {
+    background-image: url("../img/bg.png");
+    background-repeat: round;
+    background-size: auto;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    margin-left: 8px;
+    margin-right: 8px;
+    padding-bottom: 64px;
+}
+
+/* Set the education header background color. */
+.education-header {
+    background-color: var(--first-color);
+}
+
+/* Style the school header. */
+.school-header {
+    color: white;
+    padding-bottom: 8px;
+    padding-top: 8px;
+    text-align: center;
+}
+
+/* Style the school card. */
+.school {
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.8);
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+/* Set the school image margins. */
+.school-image {
+    margin-bottom: 32px;
+    margin-top: 32px;
+}
+
+/* Set the FIT image size. */
+.fit-image {
+    height: 64px;
+    width: auto;
+}
+
+/* Set the GCH image size. */
+.gch-image {
+    height: 64px;
+    width: auto;
+}
+
+/* Style the font to italic. */
+.italic {
+    font-style: italic;
+}
+
+/* ************************************************************************* */
+/*                              SECTION SKILLS                               */
+/* ************************************************************************* */
+
+/* Style the skills section. */
+#skills {
+    background-image: url("../img/bg.png");
+    background-repeat: round;
+    background-size: auto;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    margin-left: 8px;
+    margin-right: 8px;
+    padding-bottom: 64px;
+}
+
+/* Set the left margin to the skills header. */
+.skills-header {
+    margin-left: 16px;
+}
+
+/* Style the skill tile. */
+.skill {
+    background-color: var(--first-color);
+    border-radius: 16px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    color: white;
+    margin: 16px 16px 32px;
+    padding: 16px 16px;
+}
+
+/* Set the skill image specifications. */
+.skill-image {
+    background-color: white;
+    border-radius: 4px;
+    height: 128px;
+    padding: 8px;
+    transition-duration: 0.64s;
+    width: 128px;
+}
+
+.skill-image:hover {
+    transform: scale(1.1);
+}
+
+/* Style the skill tile with four items to the grid. */
+.quadruple {
+    display: grid;
+    gap: 32px;
+    grid-template-areas: "first second" "third fourth";
+}
+
+/* Style the skill tile with three items to the grid. */
+.triple {
+    display: grid;
+    gap: 32px;
+    grid-template-areas: "first second" "third third";
+}
+
+/* Set the place for specific items. */
+#flutter, #macos {
+    grid-area: third;
+}
+
+/* ************************************************************************* */
+/*                             SECTION INTERESTS                             */
+/* ************************************************************************* */
+
+/* Style the interests section. */
+#interests {
+    background-image: url("../img/bg.png");
+    background-repeat: round;
+    background-size: auto;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    margin-left: 8px;
+    margin-right: 8px;
+    padding-bottom: 64px;
+}
+
+/* Style the interest border. */
+.interest {
+    border-top: 2px solid var(--fourth-color);
+    margin-left: 32px;
+    margin-right: 32px;
+}
+
+/* Style the last interest border. */
+.interest:last-child {
+    border-bottom: 2px solid var(--fourth-color);
+}
+
+/* ************************************************************************* */
+/*                                  FOOTER                                   */
+/* ************************************************************************* */
+
+/* Style the footer. */
+footer {
+    background-color: var(--fifth-color);
+    color: white;
+    padding: 16px;
+    text-align: center;
+}
+
+/* ************************************************************************* */
+/*                              DESKTOP LAYOUT                               */
+/* ************************************************************************* */
+
+/* Set the media query for larger screens. */
+@media screen and (min-width: 769px) {
+    /* Display the navigation links horizontally. */
+    .top-nav-menu #menu-link {
+        display: inline-block;
+    }
+
+    /* Style the navigation menu links for larger screens. */
+    .top-nav-menu a {
+        display: inline-block;
+        padding: 16px 24px; /* Adjust padding as needed. */
+    }
+
+    /* Hide the hamburger icon on larger screens. */
+    .top-nav-menu a.icon {
+        display: none;
+    }
+
+    /* Style the top navigation menu to the screen center. */
+    .top-nav-menu {
+        text-align: center;
+    }
+
+    /* Style the experience and education sections for larger screens. */
+    .experience, .education {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Remove the top margin. */
+    .education-gap {
+        margin-top: 0;
+    }
+
+    .quadruple {
+        grid-template-areas: "first second third fourth";
+    }
+
+    /* Style the skills section for larger screens. */
+    .triple {
+        grid-template-areas: "first second third";
+    }
+}
+
+/* Set the media query for even larger screens. */
+@media screen and (min-width: 1200px) {
+    /* Style the experience and education sections for even larger screens. */
+    .experience {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    /* Style the experience float for even larger screens. */
+    .right {
+        float: left;
+        margin-left: 0;
+        margin-right: 16px;
+    }
+
+    /* Style the interests section for even larger screens. */
+    .interests {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Style the interest border for even larger screens. */
+    .interest:first-child {
+        border-bottom: 2px solid var(--fourth-color);
+    }
+}

@@ -1,0 +1,302 @@
+<!--
+   @file index.html
+   @author David Kvaček (xkvace00@stud.fit.vutbr.cz)
+   @brief Source code of the website (HTML).
+   @date 2024-04-26
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <!-- Link to the Roboto font. -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <!-- Link to the Itim font. -->
+    <link href="https://fonts.googleapis.com/css?family=Itim" rel="stylesheet">
+    <!-- Link to the Font Awesome library and custom CSS file. -->
+    <link href="https://use.fontawesome.com/releases/v6.1.1/css/all.css" rel="stylesheet">
+    <!-- Link to the custom CSS file. -->
+    <link href="./css/style.css" rel="stylesheet">
+    <title>David Kvaček</title>
+</head>
+<body>
+    <!-- Header with the navigation menu. -->
+    <header>
+        <nav>
+            <!-- Top navigation menu. -->
+            <div class="top-nav-menu" id="top-nav-menu">
+                <a class="active" href="http://www.stud.fit.vutbr.cz/~xkvace00/" id="nav-home" onclick="hide()">David Kvaček</a>
+                <!-- Navigation links (hidden by default). -->
+                <div id="menu-link">
+                    <a href="#about" id="nav-about" onclick="toggle()">About</a>
+                    <a href="#experience" id="nav-experience" onclick="toggle()">Experience</a>
+                    <a href="#education" id="nav-education" onclick="toggle()">Education</a>
+                    <a href="#skills" id="nav-skills" onclick="toggle()">Skills</a>
+                    <a href="#interests" id="nav-interests" onclick="toggle()">Interests</a>
+                </div>
+                <!-- "Hamburger menu" to toggle the navigation links. -->
+                <a class="icon" href="javascript:void(0);" onclick="toggle()">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </nav>
+    </header>
+    <!-- Main content of the website. -->
+    <main>
+        <!-- Section with the personal information. -->
+        <section id="about">
+            <div class="center">
+                <h1 class="main-header">David Kvaček</h1>
+            </div>
+            <div class="about-gap center">
+                <a class="address">Božetěchova 2, Brno</a>
+            </div>
+            <div class="about-gap center">
+                <a class="phone">+420 54114 1145</a>
+            </div>
+            <div class="button-gap center">
+                <a class="email email-button" href="mailto:info@fit.vut.cz">info@fit.vut.cz</a>
+            </div>
+            <p class="text">
+                Donec finibus ante vitae quam feugiat aliquam.
+                Curabitur interdum suscipit purus, et volutpat est sodales eget.
+                Ut sed congue libero.
+                Proin aliquet elit est, vitae pharetra enim accumsan ac.
+                Pellentesque luctus euismod lacus, ut mattis ligula.
+                Aenean nec vestibulum est.
+                Nulla vitae justo tristique, gravida metus nec, tristique nibh.
+                Nulla et tellus quis urna ultrices interdum.
+                Nunc ac luctus nulla.
+            </p>
+            <div class="center">
+                <a class="social-button" href="https://www.linkedin.com">LinkedIn</a>
+                <a class="social-button" href="https://www.github.com">GitHub</a>
+                <a class="social-button" href="https://www.twitter.com">Twitter</a>
+                <a class="social-button" href="https://www.facebook.com">Facebook</a>
+                <a class="social-button" href="https://www.instagram.com">Instagram</a>
+            </div>
+        </section>
+        <!-- Section with the experience. -->
+        <section id="experience">
+            <div class="center">
+                <h1 class="section-header">Experience</h1>
+            </div>
+            <div class="experience">
+                <div class="card">
+                    <h3>Copywriter</h3>
+                    <div class="company">
+                        <a class="card-link" href="https://www.fourcrowns.cz">Four Crowns, s.r.o.</a>
+                    </div>
+                    <img alt="copywriter" class="card-image left" src="./img/copywriter.png">
+                    <p class="content">
+                        Curabitur aliquam massa lorem, eget finibus ex tempor ac.
+                        Integer mollis iaculis congue.
+                        Sed nunc augue, pretium vitae massa at, facilisis egestas nunc.
+                        Maecenas ac mauris orci.
+                        Curabitur tempor sit amet nisi at egestas.
+                        Sed vel tortor porta, efficitur neque ac, commodo sapien.
+                        Aenean nec mi vitae diam aliquam semper a et sapien.
+                        Fusce id blandit elit.
+                        Ut faucibus, nisi vel hendrerit luctus, justo mi volutpat lorem, nec iaculis quam ante ac erat.
+                        Vivamus in arcu et purus finibus congue eu nec leo.
+                        Maecenas finibus dui porttitor porttitor finibus.
+                        Vivamus a semper enim.
+                        Suspendisse id sapien tristique, suscipit purus vitae, porttitor diam.
+                        Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+                        Quisque porta mi vel purus convallis, in molestie dui hendrerit.
+                    </p>
+                    <div class="from-to">
+                        2024 – present
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Result checker</h3>
+                    <div class="company">
+                        <a class="card-link" href="https://www.livesport.cz">Livesport, s.r.o.</a>
+                    </div>
+                    <img alt="livesport" class="card-image right" src="./img/livesport.png">
+                    <p class="content">
+                        In lobortis mattis ipsum.
+                        Integer sit amet orci mattis, laoreet quam porttitor, accumsan sem.
+                        Nam dapibus risus ut scelerisque rutrum.
+                        In nec arcu dapibus, sollicitudin augue id, ornare lacus.
+                        Praesent sagittis pretium auctor.
+                        Aliquam erat volutpat.
+                        Fusce vehicula ornare dolor sit amet imperdiet.
+                        Mauris eget lectus in diam accumsan consectetur vitae at purus.
+                    </p>
+                    <div class="from-to">
+                        2022 – 2023
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Sports editor</h3>
+                    <div class="company">
+                        <a class="card-link" href="https://www.onlajny.com">Onlajny.com</a>
+                    </div>
+                    <img alt="onlajny" class="card-image left" src="./img/onlajny.png">
+                    <p class="content">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Vivamus convallis magna et volutpat ornare.
+                        Proin sit amet iaculis enim, non cursus augue.
+                        In aliquam, eros sed eleifend molestie, diam magna eleifend risus, eget sagittis arcu massa a diam.
+                        Sed viverra sagittis dui, sed varius ex maximus ullamcorper.
+                        Sed turpis velit, interdum congue fringilla in, viverra ut ex.
+                        Aliquam dapibus elementum lectus eu blandit.
+                        Suspendisse venenatis consectetur velit non lobortis.
+                        Cras viverra nisl sit amet purus dapibus, in fringilla ipsum porta.
+                        Morbi imperdiet sagittis diam, eget lacinia tortor rhoncus nec.
+                        In eget orci hendrerit, aliquam ligula a, dictum sem.
+                        Cras tristique varius vehicula.
+                    </p>
+                    <div class="from-to">
+                        2021 – 2022
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Section with the education. -->
+        <section id="education">
+            <div class="center">
+                <h1 class="section-header">Education</h1>
+            </div>
+            <div class="education">
+                <div class="school">
+                    <div class="education-header">
+                        <h3 class="school-header">Faculty of Information Technology</h3>
+                    </div>
+                    <div class="center">
+                        <a href="https://www.fit.vut.cz">
+                            <img alt="fit" class="fit-image school-image" src="./img/fit.png">
+                        </a>
+                    </div>
+                    <div class="center italic">
+                        Bachelor's degree in Information Technology.
+                    </div>
+                    <div class="center">
+                        <button class="study" id="fit-period" onclick="fit()" type="button">
+                            Reveal the study period
+                        </button>
+                    </div>
+                </div>
+                <div class="education-gap school">
+                    <div class="education-header">
+                        <h3 class="school-header">Gymnasium Chotěboř</h3>
+                    </div>
+                    <div class="center">
+                        <a href="https://www.gch.cz">
+                            <img alt="gch" class="gch-image school-image" src="./img/gch.png">
+                        </a>
+                    </div>
+                    <div class="center italic">
+                        Secondary education with a graduation exam.
+                    </div>
+                    <div class="center">
+                        <button class="study" id="gch-period" onclick="gch()" type="button">
+                            Reveal the study period
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Section with the skills. -->
+        <section id="skills">
+            <div class="center">
+                <h1 class="section-header">Skills</h1>
+            </div>
+            <h3 class="skills-header">Programming languages</h3>
+            <div class="quadruple skill">
+                <div class="center">
+                    <img alt="c" class="skill-image" src="./img/c.png">
+                </div>
+                <div class="center">
+                    <img alt="cpp" class="skill-image" src="./img/cpp.png">
+                </div>
+                <div class="center">
+                    <img alt="python" class="skill-image" src="./img/python.png">
+                </div>
+                <div class="center">
+                    <img alt="php" class="skill-image" src="./img/php.png">
+                </div>
+            </div>
+            <h3 class="skills-header">Frameworks</h3>
+            <div class="skill triple">
+                <div class="center">
+                    <img alt="django" class="skill-image" src="./img/django.png">
+                </div>
+                <div class="center">
+                    <img alt="flask" class="skill-image" src="./img/flask.png">
+                </div>
+                <div class="center" id="flutter">
+                    <img alt="flutter" class="skill-image" src="./img/flutter.png">
+                </div>
+            </div>
+            <h3 class="skills-header">Version control systems</h3>
+            <div class="skill">
+                <div class="center">
+                    <img alt="git" class="skill-image" src="./img/git.png">
+                </div>
+            </div>
+            <h3 class="skills-header">Operating systems</h3>
+            <div class="skill triple">
+                <div class="center">
+                    <img alt="windows" class="skill-image" src="./img/windows.png">
+                </div>
+                <div class="center">
+                    <img alt="linux" class="skill-image" src="./img/linux.png">
+                </div>
+                <div class="center" id="macos">
+                    <img alt="macos" class="skill-image" src="./img/macos.png">
+                </div>
+            </div>
+        </section>
+        <!-- Section with the interests. -->
+        <section id="interests">
+            <div class="center">
+                <h1 class="section-header">Interests</h1>
+            </div>
+            <div class="interests">
+                <div class="interest">
+                    <p class="text">
+                        Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+                        Curabitur eu augue id nulla tincidunt pulvinar nec vitae ante.
+                        Sed at euismod ipsum.
+                        Nullam sed mauris ut ante tincidunt hendrerit.
+                        Phasellus quis rhoncus dui.
+                        Suspendisse quis nibh ac turpis lacinia dapibus.
+                        Vestibulum pretium, ex quis tristique pretium, orci ante tincidunt velit, semper mollis risus nulla ac turpis.
+                        Morbi convallis turpis ut orci tincidunt, nec ultrices justo egestas.
+                        Integer id tincidunt libero.
+                        Nam fringilla lorem enim, a commodo lorem dapibus nec.
+                        Aliquam ac nisi mollis, vehicula mauris vitae, iaculis odio.
+                        Sed lacinia porta nulla, id sollicitudin urna posuere sed.
+                        Ut sed pulvinar leo.
+                    </p>
+                </div>
+                <div class="interest">
+                    <p class="text">
+                        In lacinia est sed risus vestibulum, sit amet mattis ligula feugiat.
+                        Etiam fermentum viverra semper.
+                        Pellentesque ac bibendum sem.
+                        Suspendisse ut sapien pharetra, tincidunt elit sed, sollicitudin ex.
+                        Curabitur laoreet, mauris non sagittis scelerisque, arcu dui consequat erat, vitae aliquam turpis arcu sit amet ante.
+                        Quisque lobortis mi sed dignissim lacinia.
+                        In hac habitasse platea dictumst.
+                        Sed tristique convallis lorem, in consectetur diam volutpat eu.
+                        In hac habitasse platea dictumst.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Footer with the copyright notice. -->
+    <footer>
+        &copy; 2024 David Kvaček. For educational purposes only.
+    </footer>
+    <!-- Link to the jQuery library. -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Link to the custom JavaScript file. -->
+    <script src="./js/script.js"></script>
+</body>
+</html>
