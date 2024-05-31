@@ -1,0 +1,280 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+body section#about {
+    background: linear-gradient(to top, #e0e0e0, #ffffff);
+    padding-top: 10px;
+    padding-bottom: 50px;
+}
+
+h1 {
+    margin: 0px;
+    font-family: Arial, sans-serif;
+    padding-top: 10px;
+    font-size: 30px;
+    color: white;
+}
+
+h2 {
+    color:#b15e23;
+    font-size: 20px;
+}
+
+nav {
+    text-align: center;
+}
+
+header {
+    background-color: #3c1f0a;
+    max-height: 150px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-bottom: 0px;
+}
+
+header .text {
+    color: #d5a17c;
+    font-size: 20px;
+    padding-top: 5px;
+    padding-bottom: 20px;
+}
+
+.item {
+    padding-left: 0px;
+    padding-right: 10px;
+    display: inline-block;
+    color: white;
+    font-size: 15px;
+    position: relative;
+}
+
+.item:hover::after {
+    content: url("menu-bullet.gif");
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    top: 200%;
+    left: 40%;
+    transform: translateX(-50%);
+}
+
+.text, #home, section#about div, .footer {
+    max-width: 960px;
+    min-width: 500px;
+    align-self: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+footer {
+    display: float;
+    background-color: #3c1f0a;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-bottom: 0px;
+}
+
+footer h2, dt {
+    color: white;
+}
+
+footer dd, footer li {
+    color:  #d5a17c;
+}
+
+footer section {
+    padding-top: 15px;
+}
+
+#contact {
+    float: left;
+}
+
+table {
+    border: 4px solid;
+    font-size: small;
+}
+
+.table-element th {
+    border-left: none;
+    border-right: none;
+}
+
+th, tr {
+    border: 2px solid;
+}
+
+td {
+    border: 2px solid;
+    text-align: center;
+}
+
+.table-color, .table-name, .table-points {
+    color: #656565;
+    background-color: #d5a17c;
+    border-left: 2px dotted;
+    border-top:  2px dotted;
+}
+
+.table-name {
+    width: 100px;
+}
+
+.table-points {
+    width: 50px;
+}
+
+.table-name-align {
+    text-align: left;
+}
+
+.lectures {
+    border-bottom: 3px dotted #b15e23;
+}
+
+.labs {
+    display: flex;
+    align-items: center;
+    border-bottom: 3px dotted #b15e23;
+    padding-bottom: 10px;
+}
+
+.labs p {
+    margin: 0;
+}
+
+dl {
+    display: grid;
+    grid-template-columns: max-content auto;
+    max-width: fit-content;
+}
+
+dt {
+    grid-column-start: 1;
+}
+
+dd {
+    grid-column-start: 2;
+    text-align: right;
+}
+
+img {
+    padding-right: 10px;
+}
+
+#list {
+    list-style-image: url("footer-list-bullet.gif");
+    margin-bottom: 0px;
+    padding-bottom: 20px;
+}
+
+a:link {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:visited {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: inherit;
+}
+
+a:active {
+    text-decoration: underline;
+    color: inherit;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 576px 384px;
+    grid-template-areas:
+    "lectures exercises"
+    "results exercises";
+    grid-column-gap: 30px;
+    max-width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+section#lectures {
+    grid-area: lectures;
+    padding-right: 25px;
+}
+
+section#results {
+    grid-area: results;
+    margin-bottom: 25px;
+    padding-right: 25px;
+}
+
+section#exercises {
+    grid-area: exercises;
+    background: linear-gradient(to right, #e0e0e0, white);
+    padding-bottom: 25px;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+.lect {
+    float: left;
+    display: grid;
+    grid-template-areas:
+    "img title"
+    "img text";
+    grid-template-columns: 50px 200px;
+    grid-column-gap: 10px;
+    align-items: flex-start;
+}
+
+.lect img {
+    grid-area: img;
+    padding-right: 10px;
+    padding-top: 20px;
+}
+
+.lect h2 {
+    grid-area: title;
+    margin: 0;
+}
+
+.lect p {
+    grid-area: text;
+    margin: 0;
+}
+
+#lect {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-row-gap: 10px;
+    grid-column-gap: 10px;
+    grid-template-areas:
+    "lect1 lect2"
+    "lect3 lect4";
+}
+
+#first {
+    grid-area: lect1;
+    align-self: start;
+}
+
+#second {
+    grid-area: lect2;
+    align-self: start;
+}
+
+#third {
+    grid-area: lect3;
+    align-self: start;
+}
+
+#fourth {
+    grid-area: lect4;
+    align-self: start;
+}
