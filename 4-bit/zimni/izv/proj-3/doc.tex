@@ -1,0 +1,66 @@
+%
+% @file doc.tex
+% @author David Kvaček (xkvace00@stud.fit.vutbr.cz)
+% @brief Source code of the project report from the IZV course.
+% @date 2024-01-03
+%
+
+\documentclass[a4paper, 10pt]{article}
+\usepackage[left=2cm, text={18cm, 26cm}, top=2cm]{geometry}
+\usepackage[czech]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[IL2]{fontenc}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{caption}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+    \section*{Vlastní analýza dopravních nehod}
+    Zpráva třetí části projektu v~rámci kursu IZV \\
+    Autor: David Kvaček (\href{mailto:xkvace00@stud.fit.vutbr.cz}{xkvace00@stud.fit.vutbr.cz})
+\end{center}
+
+Cílem této analýzy je zkoumání vztahů mezi hlavními příčinami dopravních nehod, průměrnou hmotnou škodou a~vlivem alkoholu či drog na viníky nehod.
+Analýza je provedena na základě poskytnutých dat o~dopravních nehodách v~letech 2023 až 2024.
+
+Pro analýzu jsou data nejprve připravena, což zahrnuje jejich načtení a~předzpracování z~poskytnutých souborů, následované filtrací neplatných nebo chybějících hodnot v~příslušných sloupcích.
+Hlavní příčiny nehod jsou rozděleny do šesti kategorií: nezaviněná řidičem, nepřiměřená rychlost jízdy, nesprávné předjíždění, nedání přednosti v~jízdě, nesprávný způsob jízdy a~technická závada vozidla.
+Pro výpočet vlivu alkoholu a~drog jsou řidiči klasifikováni podle přítomnosti těchto látek v~krvi do čtyř skupin: bez vlivu alkoholu a~drog, pod vlivem alkoholu, pod vlivem drog a~pod vlivem alkoholu a~drog.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.86\linewidth]{fig.png}
+\end{figure}
+
+\begin{table}[ht]
+    \caption*{\textbf{Počet nehod podle hlavní příčiny a~vlivu alkoholu a~drog}}
+    \resizebox{\textwidth}{!}{
+        \begin{tabular}{|l|r|r|r|r|}
+        \hline
+        \textbf{hlavní příčina nehody} &
+          \multicolumn{1}{l|}{\textbf{bez vlivu alkoholu a~drog}} &
+          \multicolumn{1}{l|}{\textbf{pod vlivem alkoholu}} &
+          \multicolumn{1}{l|}{\textbf{pod vlivem drog}} &
+          \multicolumn{1}{l|}{\textbf{pod vlivem alkoholu a~drog}} \\ \hline
+            nezaviněná řidičem         & \texttt{807}   & \texttt{103}  & \texttt{6}   & \texttt{7}  \\ \hline
+            nepřiměřená rychlost jízdy & \texttt{11\,482} & \texttt{1\,424} & \texttt{169} & \texttt{76} \\ \hline
+            nesprávné předjíždění      & \texttt{1\,153}  & \texttt{49}   & \texttt{12}  & \texttt{2}  \\ \hline
+            nedání přednosti v~jízdě   & \texttt{9\,125}  & \texttt{295}  & \texttt{49}  & \texttt{11} \\ \hline
+            nesprávný způsob jízdy     & \texttt{31\,110} & \texttt{3\,369} & \texttt{283} & \texttt{99} \\ \hline
+            technická závada vozidla   & \texttt{110}   & \texttt{0}    & \texttt{2}   & \texttt{2}  \\ \hline
+        \end{tabular}
+    }
+\end{table}
+
+Z~analýzy všech záznamů dopravních nehod v~letech 2023 až 2024 (\texttt{163\,580}), které obsahují informace o~hlavních příčinách nehod, průměrné hmotné škodě a~vlivu alkoholu a~drog na viníky nehod, vyplývá, že průměrná hmotná škoda dosahuje hodnoty \texttt{8\,328,15\,Kč}, přičemž jako nejvíce nákladné se ukazují technické závady vozidel s~průměrnou hmotnou škodou \texttt{15\,060,74\,Kč}.
+Naopak „nejlevnější“ jsou podle dostupných dat nehody nezaviněné řidičem s~průměrnou hmotnou škodou \texttt{4\,235,26\,Kč}.
+
+Ačkoliv jsou nehody způsobené technickými závadami vozidel nejdražší, jejich celkový počet je ve srovnání s~ostatními příčinami relativně nízký.
+Nejčastější příčinou dopravních nehod je však nesprávný způsob jízdy, který má za následek více než pětinu všech kolizí.
+Téměř třetina všech dopravních nehod (\texttt{53\,787}) je zaviněna osobami, které nejsou pod vlivem alkoholu či drog.
+Navzdory obecným předsudkům ve spojitosti s~agresivitou a~rizikovým chováním účastníků silničního provozu pod vlivem alkoholu a~drog, tito viníci způsobují daleko méně nehod (\texttt{5\,958}) a~jejich průměrná hmotná škoda je překvapivě nižší (\texttt{8\,165,85\,Kč}) než u~střízlivých osob (\texttt{11\,317,65\,Kč}).
+
+\end{document}
