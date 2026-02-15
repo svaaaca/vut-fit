@@ -1,0 +1,51 @@
+brand,model,color,doors_cat,seats_cat,age_cat,price_cat
+Volkswagen,Tiguan,Czarny,5_doors,5.0_seats,velmi nové,drahé
+BYD,Seal U,Czarny,4_doors,5.0_seats,,drahé
+Citroën,C1,Czerwony,5_doors,4.0_seats,střední,levné
+BYD,Seal 5,Czarny,4_doors,5.0_seats,,drahé
+Peugeot,308,Biały,5_doors,5.0_seats,střední,levné
+Skoda,Octavia,Brązowy,5_doors,5.0_seats,střední,levné
+Volkswagen,Tiguan,Granatowy,5_doors,5.0_seats,střední,střední
+Hyundai,i30,Szary,5_doors,5.0_seats,střední,levné
+Chrysler,Pacifica,Biały,5_doors,7.0_seats,nové,střední
+BYD,Seal U,Biały,4_doors,5.0_seats,,drahé
+Mazda,CX-60,Biały,5_doors,5.0_seats,velmi nové,drahé
+Kia,Sorento,Czarny,5_doors,5.0_seats,staré,levné
+BMW,X2,Szary,5_doors,5.0_seats,velmi nové,střední
+BMW,X1,Brązowy,5_doors,5.0_seats,střední,levné
+Audi,Q5,Czarny,5_doors,5.0_seats,střední,střední
+Volvo,V40,Błękitny,5_doors,5.0_seats,nové,střední
+Hyundai,ix35,Srebrny,5_doors,5.0_seats,střední,levné
+Audi,A3 Sportback,Czarny,5_doors,5.0_seats,staré,levné
+Audi,A5,Czarny,5_doors,4.0_seats,střední,levné
+MINI,Cooper S,Szary,2_doors,4.0_seats,střední,levné
+Jaguar,XF,Granatowy,4_doors,5.0_seats,staré,levné
+Opel,Astra,Czarny,4_doors,5.0_seats,střední,levné
+Audi,A5,Czerwony,5_doors,5.0_seats,nové,drahé
+Citroën,C4,Szary,5_doors,5.0_seats,střední,levné
+Ford,Fiesta,Czarny,5_doors,5.0_seats,střední,levné
+Volvo,V40,Czarny,5_doors,5.0_seats,staré,levné
+Audi,A8,Czarny,4_doors,5.0_seats,střední,drahé
+Hyundai,Tucson,Biały,5_doors,5.0_seats,velmi nové,levné
+Opel,Astra,Zielony,5_doors,5.0_seats,nové,levné
+Cupra,Formentor,Czarny,5_doors,5.0_seats,,drahé
+Audi,A1 Sportback,Czerwony,5_doors,5.0_seats,střední,levné
+Toyota,Auris,Inny kolor,5_doors,5.0_seats,střední,levné
+BMW,Seria 5,Srebrny,4_doors,5.0_seats,střední,střední
+Chrysler,Pacifica,Biały,5_doors,7.0_seats,velmi nové,drahé
+Ford,C-MAX,Czarny,5_doors,5.0_seats,střední,levné
+Volvo,XC 40,Niebieski,5_doors,5.0_seats,nové,drahé
+Toyota,Corolla,Biały,5_doors,5.0_seats,,drahé
+Kia,Rio,Czarny,5_doors,5.0_seats,střední,levné
+Seat,Leon,Szary,5_doors,5.0_seats,střední,levné
+Hyundai,ix35,Czarny,5_doors,5.0_seats,střední,levné
+Mitsubishi,Colt,Srebrny,3_doors,5.0_seats,střední,levné
+Volkswagen,Golf,Czerwony,5_doors,5.0_seats,střední,střední
+Skoda,Kamiq,Niebieski,5_doors,5.0_seats,,drahé
+Cupra,Terramar,Niebieski,5_doors,5.0_seats,,drahé
+Peugeot,3008,Czarny,5_doors,5.0_seats,nové,střední
+Hyundai,i30,Czarny,5_doors,5.0_seats,střední,levné
+Ford,Focus,Niebieski,4_doors,5.0_seats,nové,levné
+Audi,A3,Srebrny,3_doors,5.0_seats,staré,levné
+Mercedes-Benz,GLA,Zielony,5_doors,5.0_seats,nové,střední
+BMW,X1,Czarny,5_doors,5.0_seats,střední,střední

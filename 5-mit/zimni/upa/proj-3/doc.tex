@@ -1,0 +1,230 @@
+% /**
+%  * @file doc.tex
+%  * @author Martin Burian (xburiam00@stud.fit.vutbr.cz)
+%  * @author Karel Kaska (xkaska02@stud.fit.vutbr.cz)
+%  * @author David Kvaček (xkvace00@stud.fit.vutbr.cz)
+%  * @brief Project documentation from the UPA course.
+%  * @date 2025-12-11
+%  */
+
+\documentclass[a4paper, 11pt]{article}
+
+\usepackage[left=2cm, text={17cm, 25cm}, bottom=3cm, top=3cm]{geometry}
+\usepackage[czech]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[IL2]{fontenc}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{amssymb}
+
+\begin{document}
+
+\begin{titlepage}
+    \begin{center}
+        \includegraphics[scale=0.125]{logo.png} \\
+        \vspace{\stretch{0.382}}
+        \LARGE{Dokumentace projektu z~kursu Ukládání a~příprava dat} \\
+        \huge{\textbf{Projekt, 3. část: příprava dat a~jejich popisná charakteristika}}
+        \vspace{\stretch{0.618}}
+    \end{center}
+
+    \hfill \Large{Martin Burian \href{mailto:xburiam00@stud.fit.vutbr.cz}{(xburiam00@stud.fit.vutbr.cz)}}
+
+    \hfill \Large{Karel Kaska \href{mailto:xkaska02@stud.fit.vutbr.cz}{(xkaska02@stud.fit.vutbr.cz)}} \\
+    \Large{Brno, \today \hfill David Kvaček \href{mailto:xkvace00@stud.fit.vutbr.cz}{(xkvace00@stud.fit.vutbr.cz)}}
+\end{titlepage}
+
+\section*{Charakteristika datové sady a~atributů}
+
+Analyzovaná datová sada obsahuje záznamy o~inzerátech ojetých i~nových osobních automobilů, získaných z~portálu \href{https://www.otomoto.pl}{https://www.otomoto.pl}.
+Sada ve svém surovém stavu obsahuje 174 záznamů.
+Každý záznam reprezentuje jednu nabídku vozu a~je definován následujícími atributy:
+
+\begin{itemize}
+    \item \textbf{URL} (kategorický typ) --~unikátní odkaz na inzerát, slouží jako identifikátor,
+    \item \textbf{Název} (kategorický typ) --~plný název vozu, často obsahující i~motorizaci a~výbavu,
+    \item \textbf{Cena} (numerický typ) --~cena vozu v~lokální měně (\textit{PLN}), hodnoty vyžadují předzpracování (odstranění mezer), rozsah je široký, od levných ojetin po luxusní vozy,
+    \item \textbf{Značka} (kategorický typ) --~výrobce vozu (např. \textit{BMW}, \textit{Audi}, \textit{Volkswagen}), v~sadě se vyskytuje cca 25 unikátních značek,
+    \item \textbf{Model} (kategorický typ) --~konkrétní model vozu (např. \textit{Golf}, \textit{A4}, \textit{X1}),
+    \item \textbf{Barva} (kategorický typ) --~dominantní barva vozu (např. \textit{černá}, \textit{šedá}, \textit{bílá}),
+    \item \textbf{Počet dveří} (numerický typ) --~nejčastěji nabývá hodnoty \textit{5},
+    \item \textbf{Počet sedadel} (numerický typ) --~typicky \textit{5}, vyskytují se i~\textit{4}~(kupé) nebo \textit{7}~(SUV), tento atribut obsahuje chybějící hodnoty,
+    \item \textbf{Rok výroby} (numerický typ) --~rozsah let v~analyzovaném vzorku je v~rozmezí \textit{1995} až \textit{2025}.
+\end{itemize}
+
+\section*{Analýza rozložení hodnot}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\textwidth]{price.png}
+    \caption{Histogram a~krabicový graf atributu cena vozu.}
+    \label{price}
+\end{figure}
+
+\noindent Z~histogramu cen (obrázek \ref{price}~vlevo) je patrné, že rozložení je silně zešikmené doprava.
+Většina nabízených vozů se pohybuje v~nižších cenových hladinách (do 50\,000 až 100\,000).
+S~rostoucí cenou četnost inzerátů klesá.
+Na pravém chvostu grafu lze pozorovat několik málo inzerátů s~extrémně vysokou cenou, což reprezentuje luxusní segment.
+
+\noindent \\ Krabicový graf (obrázek \ref{price}~vpravo) jasně ilustruje větší počet hodnot spektra, které se nacházejí nad hranicí třetího kvartilu ($Q3$) než pod hranicí prvního kvartilu ($Q1$).
+Tyto hodnoty reprezentují záznamy o~vozech, jejichž cena násobně převyšuje medián celého souboru.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\textwidth]{trend.png}
+    \caption{Bodový graf vztahu mezi atributy rok výroby a~cena.}
+    \label{trend}
+\end{figure}
+
+\noindent Bodový graf (obrázek \ref{trend}) zobrazuje vztah mezi stářím vozu a~jeho cenou.
+Je zde viditelná pozitivní korelace.
+Starší vozy (před rokem 2010) se drží převážně v~nízkém cenovém pásmu s~minimálním rozptylem.
+U~vozů vyrobených po roce 2020 si lze všimnout nejen výrazně vyšší ceny, ale také obrovský rozptyl cen, který je dán rozdíly mezi značkami a~výbavou u~nových aut.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\textwidth]{brand.png}
+    \caption{Krabicový graf atributu cena pro 15 vybraných značek vozů.}
+    \label{brand}
+\end{figure}
+
+\noindent Tento graf (obrázek \ref{brand}) porovnává cenové hladiny u~vybraných značek.
+Prémiové značky jako např. \textit{BYD} či \textit{Cupra} mají výrazně vyšší medián ceny.
+Naopak vozy značek \textit{Volkswagen}, \textit{Škoda}, \textit{Ford} nebo \textit{Toyota} mají širší mezikvartilové rozpětí ($IQR$) než masové značky jako \textit{Opel} a~\textit{Renault}.
+U~značek \textit{Volkswagen} či \textit{Ford} lze pozorovat velké rozpětí hodnot od třetího kvartilu ($Q3$) směrem k~hranici $Q3 + 1.5 \ast IQR$, což může být způsobeno prodejem nových modelů (např. rok 2025) vedle starých ojetin.
+
+\newpage
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\textwidth]{heatmap.png}
+    \caption{Teplotní mapa průměrné ceny vozu dle atributů značka a~barva.}
+    \label{heatmap}
+\end{figure}
+
+\noindent Barevná mapa (obrázek \ref{heatmap}) zobrazující, jak kombinace značky a~barvy vozu ovlivňuje průměrnou cenu.
+Mapa odhaluje zajímavé anomálie.
+Obecně platí, že u~prémiových značek jsou tzv. business barvy (\textit{černá}, \textit{šedá}) asociovány s~vyšší průměrnou ligou.
+Nicméně extrémní hodnoty mohou vznikat u~specifických kombinací, kde malý počet vzorků zkreslí průměr.
+V~rámci běžných značek (např. \textit{Hyundai}, \textit{Kia}) je vliv barvy na cenu zanedbatelný a~mapa je barevně jednotnější.
+
+\noindent \\ Histogram na obrázku \ref{distribution} ukazuje strukturu nabízeného vozového parku na základě konkrétního atributu rok výroby.
+Podle očekávání vykazuje graf levostranné zešikmení (směrem k~novějším rokům), jelikož v~datasetu je vysoké zastoupení zánovních vozů včetně mnoha modelů s~rokem výroby 2025 (např. \textit{BYD Seal}, \textit{Cupra Terramar}).
+Starší vozy s~rokem výroby 2010 a~dříve tvoří chvost distribuce.
+
+\newpage
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\textwidth]{distribution.png}
+    \caption{Histogram distribuce vozů podle roku výroby.}
+    \label{distribution}
+\end{figure}
+
+\section*{Detekce odlehlých hodnot}
+
+K~detekci odlehlých hodnot je primárně využita metoda mezikvartilového rozpětí ($IQR$).
+Hodnota je považována za odlehlou, pokud leží pod $Q1 - 1.5 \ast IQR$ nebo nad $Q3 + 1.5 \ast IQR$.
+Doplňkově je provedena detekce odlehlých hodnot pomocí metody standardního skóre (tzv. $Z$-skóre) a~její upravené podoby.
+Různé přístupy identifikují odlišný počet odlehlých hodnot, přičemž upravená metoda $Z$-skóre se jeví jako robustnější.
+
+\noindent \\ V~rámci atributu cena je detekována řada odlehlých hodnot na horní hranici spektra.
+Příkladem může být \textit{Land Rover Defender} (cca 460\,000), \textit{Lexus LM} (cca 450\,000) nebo \textit{Audi Q7} (cca 410\,000).
+Nejedná se však o~chyby v~datech, nýbrž o~validní záznamy luxusních nebo zcela nových vozů v~datasetu, které se výrazně liší od průměrné ojetiny.
+
+\noindent \\ Co se týče atributu rok výroby, zde lze uvést příklad \textit{BMW Seria 3}~z~roku 1995.
+V~kontextu převážně moderních vozů (2010+) působí rok 1995 jako odlehlá hodnota, ale opět jde o~validní data.
+
+\section*{Analýza chybějících hodnot}
+
+Při kontrole integrity dat vychází, že většina atributů (cena, značka, model, barva, rok výroby) je vyplněna u~veškerých záznamů.
+Atribut počet sedadel obsahuje prázdné hodnoty (\textit{NaN}), tj. \textit{BMW X1} (rok výroby 2010), \textit{Opel Astra} (rok výroby 2017), \textit{Renault Captur} (rok výroby 2018) a~několik dalších.
+
+\noindent \\ Chybějící hodnoty nejsou systematické pro jednu značku, ale vyskytují se náhodně napříč celou datovou sadou.
+Vzhledem k~tomu, že počet chybějících hodnot je malý (přesněji řečeno jich je 12, tj. u~6.9\,\% záznamů), je možné tyto záznamy pro účely modelování buď odstranit, nebo doplnit nejčastější hodnotou (modus), což je v~drtivé většině případů hodnota \textit{5}.
+
+\newpage
+
+\section*{Korelační analýza}
+
+Na základě vztahů numerických atributů je provedena korelační analýza.
+Tato analýza slouží k~měření a~vizualizaci lineárního vztahu mezi v~tomto případě více numerickými atributy v~datové sadě.
+Zde se numerickými atributy myslí cena, rok výroby, počet dvěří a~počet sedadel.
+Pro kvantifikaci vztahů je použit Pearsonův korelační koeficient ($r$), jehož hodnota se pohybuje v~intervalu $[-1, 1]$, kde:
+
+\begin{itemize}
+    \item $r = 1$~značí dokonalou pozitivní korelaci, tj. s~růstem hodnoty jednoho atributu roste i~hodnota druhého atributu,
+    \item $r = -1$~značí dokonalou negativní korelaci, tj. s~růstem hodnoty jednoho atributu klesá hodnota druhého atributu,
+    \item $r \approx 0$~značí absenci lineárního vztahu.
+\end{itemize}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\textwidth]{correlation.png}
+    \caption{Korelační matice numerických atributů.}
+    \label{correlation}
+\end{figure}
+
+\noindent Z~korelační matice (obrázek \ref{correlation}) plyne, že např. mezi cenou a~počtem dveří vozu není v~podstatě žádný lineární vztah a~tudíž tyto dva atributy nevykazují žádné známky vzájemné korelace.
+Na druhé straně největší pozitivní korelace si lze všimnout u~atributů cena a~rok výroby, z~čehož lze usoudit, že čím je hodnota atributu rok výroby vyšší (tzn. analyzovaný vůz je novější), tím roste logicky i~jeho cena.
+V~rámci ostatních dvojic atributů lze pozorovat korelační koeficient v~rozsahu 0.19 až 0.39, tj. slabá pozitivní korelace.
+
+\section*{Příprava datové sady}
+
+Cílem této fáze je transformace původních dat do podoby vhodné pro konkrétní dolovací algoritmus, tj. predikce ceny vozu.
+Na základě charakteru dat jsou vytvořeny dvě odlišné varianty datové sady.
+Jedna je určená pro algoritmy pracující s~kategorickými daty a~druhá pro algoritmy vyžadující numerický vstup.
+
+\section*{Odstranění irelevantních atributů}
+
+Z~datové sady jsou odstraněny atributy URL a~název u~všech záznamů.
+Atribut URL slouží pouze jako identifikátor a~pro modelování nemá prediktivní hodnotu.
+Atribut název obsahuje příliš specifické informace (vysoká kardinalita), které jsou již částečně obsaženy v~atributech značka a~model.
+
+\section*{Ošetření chybějících hodnot}
+
+V~datové sadě jsou identifikovány chybějící hodnoty jen a~pouze u~numerického atributu počet sedadel.
+Pro splnění zadání jsou uvažovány následující dvě metody:
+
+\begin{enumerate}
+    \item \textbf{Odstranění záznamů} --~tato metoda by vedla ke ztrátě přibližně 7\,\% dat, vzhledem k~malé velikosti datasetu (méně než 200 záznamů) je tato metoda vyhodnocena jako nevhodná pro finální sady.
+    \item \textbf{Imputace (doplnění hodnot)} --~zvolená metoda pro obě finální varianty, u~numerických atributů (v~tomto případě pouze počet sedadel) jsou chybějící hodnoty nahrazeny mediánem, který je robustnější vůči odlehlým hodnotám než průměr, zatímco u~kategorických atributů  by byly případné chybějící hodnoty nahrazeny modusem (nejčastější hodnotou).
+\end{enumerate}
+
+\section*{Ošetření odlehlých hodnot}
+
+Na základě analýzy v~předchozí části jsou detekovány odlehlé hodnoty v~atributech cena a~rok výroby vozu.
+Pro čištění dat je použita metoda mezikvartilového rozpětí ($IQR$).
+Záznamy, jejichž hodnota leží mimo interval $[Q1 - 1.5 \ast IQR, Q3 + 1.5 \ast IQR]$, jsou z~datasetu odstraněny.
+Tímto krokem jsou eliminovány extrémní cenové výkyvy (luxusní vozy) a~historická vozidla, což přispěje k~lepší generalizaci modelů.
+
+\section*{Varianta datové sady pro kategorické vstupy}
+
+Tato varianta je připravena pro algoritmy vyžadující diskrétní vstupy.
+Numerické atributy jsou diskretizovány do intervalů nebo převedeny na textové řetězce.
+Hodnoty atributu cena jsou diskretizovány do čtyř kategorií: \textit{levné} (do 50\,000), \textit{střední} (do 100\,000), \textit{drahé} (do 200\,000) a~\textit{luxusní} (nad 200\,000).
+Obdobně je provedena diskretizace pro atribut rok výroby do kategorií \textit{velmi nové} (do 3~let), \textit{nové} (3--7~let), \textit{střední} (7--15 let) a~\textit{staré} (nad 15 let).
+Hodnoty atributů počet dveří a~počet sedadel jsou převedeny na kategorické atributy (např. hodnota $5$~převedena na řetězec \textit{5\_doors}).
+Výsledná sada obsahuje pouze kategorické atributy: \textit{brand}, \textit{model}, \textit{color}, \textit{doors\_cat}, \textit{seats\_cat}, \textit{age\_cat}, \textit{price\_cat}.
+
+\section*{Varianta datové sady pro numerické vstupy}
+
+Tato varianta je určena pro metody založené na matematických výpočtech.
+Kategorické atributy jsou transformovány na čísla a~následně je rovněž provedena jejich normalizace.
+Atributy značka a~model (s~vysokým počtem unikátních hodnot) jsou převedeny pomocí \textit{Label Encodingu} (přiřazení celého čísla každé unikátní hodnotě).
+Atribut barva (nízký počet unikátních hodnot) je převeden pomocí \textit{One-Hot Encodingu} (vytvoření binárního sloupce pro každou barvu), aby se předešlo zavedení umělého uspořádání mezi barvami.
+
+\noindent \\ Všechny numerické atributy (včetně nově vzniklých z~kódování) jsou normalizovány a~škálovány do intervalu $[0, 1]$ pomocí metody \textit{Min-Max Scaling}.
+Tento krok zajišťuje, že atributy s~vysokými hodnotami (např. cena) nebudou dominovat nad atributy s~nízkými hodnotami (např. počet dveří) při matematických výpočtech.
+
+\section*{Závěr a~zhodnocení}
+
+V~rámci třetí části projektu je provedena explorativní analýza a~následná příprava datové sady inzerátů jednotlivých automobilů.
+Analýza potvrzuje očekávané závislosti, zejména silnou korelaci mezi rokem výroby a~cenou, a~odhaluje specifika datasetu, jako je přítomnost luxusních vozů tvořících odlehlé hodnoty.
+Proces přípravy dat úspěšně transformuje surová data do podoby vhodné pro strojové zpracování.
+
+\noindent \\ Klíčovým krokem je vyřešení chybějících hodnot metodou imputace a~odstranění extrémů, což zvýšuje robustnost dat.
+Vytvořením dvou variant datasetu je dosaženo univerzálnosti pro další fáze dobývání znalostí.
+Výsledné datové sady jsou konzistentní, zbavené šumu a~připravené k~okamžitému použití v~dolovacích úlohách.
+
+\end{document}
