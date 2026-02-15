@@ -1,0 +1,285 @@
+% /**
+%  * @file xkvace00.tex
+%  * @author David Kvaček (xkvace00@stud.fit.vutbr.cz)
+%  * @brief Task solution from the TIN course.
+%  * @date 2025-12-07
+%  */
+
+\documentclass[a4paper, 11pt]{article}
+
+\usepackage[left=2cm, text={17cm, 25cm}, bottom=3cm, top=3cm]{geometry}
+\usepackage[czech]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[IL2]{fontenc}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{amssymb}
+\usepackage[noend]{algorithm2e}
+
+\begin{document}
+
+\begin{titlepage}
+    \begin{center}
+        \includegraphics[scale=0.125]{logo.png} \\
+        \vspace{\stretch{0.382}}
+        \LARGE{Řešení úkolu z~kursu Teoretická informatika} \\
+        \huge{\textbf{Úkol~2\,--\,TIN 2025/2026Z}}
+        \vspace{\stretch{0.618}}
+    \end{center}
+
+    \null \hfill \Large{David Kvaček} \\
+    \Large{Brno, \today \hfill \href{mailto:xkvace00@stud.fit.vutbr.cz}{xkvace00@stud.fit.vutbr.cz}}
+\end{titlepage}
+
+\section*{Úloha 1}
+
+Uvažujme jazyky $L_1$ a~$L_2$:
+
+\begin{itemize}
+    \item $L_1 = \{ \langle M \rangle \# \langle G \rangle\ |\ M$~je TS a~$G$~je gramatika typu 2, t.ž. $\exists w \in \{ 0, 1 \}^* : w \in L(M) \wedge w \notin L(G) \}$,
+    \item $L_2 = \{ \langle M \rangle \# \langle G \rangle\ |\ M$~je TS a~$G$~je gramatika typu 2, t.ž. $\exists w \in \{ 0, 1 \}^* : w \notin L(M) \wedge w \in L(G) \}$.
+\end{itemize}
+
+\subsection*{Klasifikace a~důkaz (ne-)příslušnosti do tříd jazyka $L_1$}
+
+Příslušnost jazyka $L_1$ do třídy $RE$ (rekurzivně vyčíslitelné) lze dokázat sestrojením NTS (nedeterministického Turingova stroje) $T_1$, který tento jazyk akceptuje:
+
+\begin{itemize}
+    \item NTS $T_1$ ověří, zda jeho vstup odpovídá validnímu kódu $\langle M \rangle \# \langle G \rangle$, pokud ne, odmítne,
+    \item NTS $T_1$ nedeterministicky vygeneruje řetězec $w$,
+    \item NTS $T_1$ ověří, zda platí $w \notin L(G)$, pokud ne, odmítne,
+    \item NTS $T_1$ spustí simulaci TS $M$~na řetězci $w$,
+    \item NTS $T_1$ akceptuje vstup, pokud TS $M$~akceptuje řetězec $w$.
+\end{itemize}
+Nepříslušnost jazyka $L_1$ do třídy $REC$ (rekurzivní) lze dokázat existencí redukce $HP$ (Halting Problem, problém zastavení TS) na jazyk $L_1$, tj. $HP \leq L_1$:
+
+\begin{itemize}
+    \item požadovaná redukce je funkce $\sigma : \{ 0, 1, \# \}^* \rightarrow \{ 0, 1, \# \}^*$ definovaná jako:
+    $$\sigma ( \langle M \rangle \# \langle w \rangle ) = \langle M' \rangle \# \langle G \rangle$$
+    \item zvolíme $G$, pevnou, bezkontextovou gramatiku typu 2~takovou, že její jazyk je neprázdný, ale není to celý jazyk, tj. $\{ 0 \}^*$ s~pravidly $S \rightarrow 0S\ |\ \epsilon$, a~tedy existuje řetězec $w_0 \in \{ 0, 1 \}^*$ takový, že $w_0 \notin L(G)$, např. $w_0 = 1$,
+    \item pokud vstup $\langle M \rangle \# \langle w \rangle$ není korektní instance $HP$, tak funkce $\sigma$~vrací kód TS $M'$ takového, že $L(M') = \emptyset$ (tj. $\langle M' \rangle \# \langle G \rangle \notin L_1$), jinak $\sigma$~vrací kód TS $M'$, který pracuje na jakémkoliv vstupu $w' \in \{ 0, 1 \}^*$ následovně:
+    \begin{itemize}
+        \item $M'$ nejdříve spustí simulaci stroje $M$~na vstupu $w$,
+        \item pokud simulace cyklí, tak $M'$ cyklí pro svůj vstup $w'$, a~v~tomto případě platí $L(M') = \emptyset$,
+        \item pokud simulace skončí, tak $M'$ akceptuje svůj vstup $w'$, a~v~tomto případě platí $L(M') = \{ 0, 1 \}^*$,
+    \end{itemize}
+    \item tudíž pro $M'$ platí:
+    $$\langle M \rangle \# \langle w \rangle \in HP \Rightarrow L(M') = \{ 0, 1 \}^* \Rightarrow \exists w \in \{ 0, 1 \}^* : w \in L(M') \wedge w \notin L(G) \Rightarrow \langle M' \rangle \# \langle G \rangle \in L_1$$
+    $$\langle M \rangle \# \langle w \rangle \notin HP \Rightarrow L(M') = \emptyset \Rightarrow \neg \exists w \in \{ 0, 1 \}^* : w \in L(M') \wedge w \notin L(G) \Rightarrow \langle M' \rangle \# \langle G \rangle \notin L_1$$
+    $$\Longleftrightarrow \langle M' \rangle \# \langle G \rangle \in L_1 \Rightarrow \langle M \rangle \# \langle w \rangle \in HP$$
+
+    $$\textrm{neboli}\ \langle M \rangle \# \langle w \rangle \in HP \Longleftrightarrow \sigma ( \langle M \rangle \# \langle w \rangle ) \in L_1$$
+\end{itemize}
+Jazyk $L_1$ je $RE$, ale není $REC$, tj. $L_1 \in RE, L_1 \notin REC$.
+
+\newpage
+
+\subsection*{Klasifikace a~důkaz (ne-)příslušnosti do tříd jazyka $L_2$}
+
+Nepříslušnost jazyka $L_2$ do třídy $REC$ lze dokázat existencí redukce co-$HP$ na jazyk $L_2$, tj. co-$HP \leq L_2$:
+
+\begin{itemize}
+    \item požadovaná redukce je funkce $\sigma : \{ 0, 1, \# \}^* \rightarrow \{ 0, 1, \# \}^*$ definovaná jako:
+    $$\sigma ( \langle M \rangle \# \langle w \rangle ) = \langle M' \rangle \# \langle G \rangle$$
+    \item zvolíme $G$, pevnou, bezkontextovou gramatiku typu 2~takovou, že její jazyk je celý jazyk, tj. $\{ 0, 1 \}^*$ s~pravidly $S \rightarrow 0S\ |\ 1S\ |\ \epsilon$, a~protože $w \in L(G)$ platí pro každé $w \in \{ 0, 1 \}^*$, existenční podmínka se zjednoduší na $\exists w \in \{ 0, 1 \}^* : w \notin L(M')$,
+    \item pokud vstup $\langle M \rangle \# \langle w \rangle$ není korektní instance co-$HP$, tak funkce $\sigma$~vrací kód TS $M'$ takového, že $L(M') = \{ 0, 1 \}^*$ (tj. $\langle M' \rangle \# \langle G \rangle \notin L_2$), jinak $\sigma$~vrací kód TS $M'$, který pracuje na jakémkoliv vstupu $w' \in \{ 0, 1 \}^*$ následovně:
+    \begin{itemize}
+        \item $M'$ nejdříve spustí simulaci stroje $M$~na vstupu $w$,
+        \item pokud simulace cyklí, tak $M'$ cyklí pro svůj vstup $w'$, a~v~tomto případě platí $L(M') = \emptyset$,
+        \item pokud simulace skončí, tak $M'$ akceptuje svůj vstup $w'$, a~v~tomto případě platí $L(M') = \{ 0, 1 \}^*$,
+    \end{itemize}
+    \item tudíž pro $M'$ platí:
+    $$\langle M \rangle \# \langle w \rangle \in \textrm{co-}HP \Rightarrow L(M') = \emptyset \Rightarrow \exists w \in \{ 0, 1 \}^* : w \notin L(M') \wedge w \in L(G) \Rightarrow \langle M' \rangle \# \langle G \rangle \in L_2$$
+    $$\langle M \rangle \# \langle w \rangle \notin \textrm{co-}HP \Rightarrow L(M') = \{ 0, 1 \}^* \Rightarrow \neg \exists w \in \{ 0, 1 \}^* : w \notin L(M') \wedge w \in L(G) \Rightarrow$$
+    $$\langle M' \rangle \# \langle G \rangle \notin L_2 \Longleftrightarrow \langle M' \rangle \# \langle G \rangle \in L_2 \Rightarrow \langle M \rangle \# \langle w \rangle \in \textrm{co-}HP$$
+
+    $$\textrm{neboli}\ \langle M \rangle \# \langle w \rangle \in \textrm{co-}HP \Longleftrightarrow \sigma ( \langle M \rangle \# \langle w \rangle ) \in L_2$$
+\end{itemize}
+Jazyk $L_2$ není $REC$, a~protože platí $REC \subset RE$, není ani $RE$, tj. $L_2 \notin RE, L_2 \notin REC$.
+
+\newpage
+
+\section*{Úloha 2}
+
+Důkaz, že $\textrm{ERR-COLORING} = \{ (G, k, j)\ |\ \textrm{graf}\ G\ \textrm{lze obarvit}\ k\ \textrm{barvami s~nejvýše}\ j\ \textrm{chybami} \}$ (problém obarvení s~chybami) je NP-úplný, lze provést tak, že ukážeme náležitost problému do třídy NP (nedeterministicky polynomiální) a~rovněž je možné na něj převést jiný známý NP-úplný problém (tj. NP-těžký), v~tomto případě $k\textrm{-COLORING} = \{ (G, k)\ |\ \textrm{graf}\ G\ \textrm{lze obarvit}\ k\ \textrm{barvami} \}$ (Graph Coloring Problem, problém obarvení grafu).
+
+\subsection*{ERR-COLORING $\in$~NP}
+
+NTS si nedeterministicky zvolí přiřazení barev jednotlivým vrcholům grafu (funkce $c : V \rightarrow \langle 1, k \rangle$) a~v~polynomiálním čase ověří, zda toto obarvení splňuje uvedenou podmínku, tj. počet hran spojujících vrcholy stejné barvy $\leq j$.
+
+\subsection*{$k$-COLORING $\leq_p$ ERR-COLORING}
+
+Zkonstruujeme polynomiálně vyčíslitelnou funkci $f$, pro kterou platí:
+$$A \in k\textrm{-COLORING} \Leftrightarrow f(A) \in \textrm{ERR-COLORING}$$
+Funkce $f$~pracuje následovně:
+
+\begin{itemize}
+    \item nechť $A = (G, k)$ je instance problému $k$-COLORING, kde $G = (V, E)$ je graf a~$k$~je počet barev,
+    \item funkce $f$~vytvoří instanci pro problém ERR-COLORING $f(A) = (G', k', j')$, kde:
+    \begin{itemize}
+        \item $G'$ je graf, který vznikne přidáním úplného grafu $K$~s~počtem vrcholů $k + 1$~jako samostatné komponenty k~původnímu grafu $G$,
+        \item $k' = k$~je počet barev,
+        \item $j' = 1$~je počet povolených chyb.
+    \end{itemize}
+\end{itemize}
+Je zřejmé, že platí:
+$$G\ \textrm{je obarvitelný}\ k\ \textrm{barvami (bez chyb)} \Leftrightarrow G'\ \textrm{je obarvitelný}\ k\ \textrm{barvami s~nejvýše}\ j'\ \textrm{chybami}$$
+$\Rightarrow:$
+
+\noindent Pokud je graf $G$~obarvitelný $k$~barvami bez chyb, tak v~rámci grafu $G'$ obarvíme část $G$~validním způsobem bez chyb a~část odpovídající $K$~obarvíme $k$~barvami s~jednou chybou, jelikož má tento úplný graf $k + 1$~vrcholů a~mezi každými dvěma vrcholy vede hrana, celkový počet chyb v~grafu $G'$ je tedy $0 + 1 = 1$~a~protože $1 \leq j'$ (kde $j' = 1$), tak platí $f(A) \in$~ERR-COLORING.
+
+\noindent \\ $\Leftarrow:$
+
+\noindent Pokud je graf $G'$ obarvitelný $k$~barvami s~nejvýše $j'$ chybami, tak je počet chyb v~$G'$ součtem chyb v~komponentě $G$~a~chyb v~komponentě $K$, přičemž víme, že úplný graf $K$~nelze obarvit $k$~barvami bez chyb, tedy počet chyb v~$K$~je $\geq 1$~a~protože celkový počet chyb musí být maximálně $1$, tak z~toho plyne, že počet chyb v~$G$~musí být roven $0$, tzn. původní graf $G$~je obarvitelný $k$~barvami bez chyb, platí tedy $A \in k$-COLORING.
+
+\noindent \\ Je zřejmé, že funkce $f$~je polynomiálně vyčíslitelná a~navíc pro ni platí výše uvedený vztah.
+
+\newpage
+
+\section*{Úloha 3}
+
+Uvažujme teorii $T$~se signaturou $\langle \{ Cat_{/ 0}, Fish_{/ 0}, Trex_{/ 0} \}, \{ eats_{/ 2}, =_{/ 2} \} \rangle$ ($=$~je standardní rovnost) se speciálními axiomy:
+$$\forall x(x = Fish\ \vee\ x = Cat\ \vee\ x = Trex)$$
+$$\forall x \forall y(eats(x, y) \leftrightarrow \neg eats(y, x))$$
+$$\forall x(x = Trex\ \vee\ eats(Trex, x))$$
+
+\subsection*{Rozhodnutí a~zdůvodnění tvrzení o~teorii $T$}
+
+\begin{itemize}
+    \item[(a)] Teorie $T$~není bezesporná, protože neexistuje ani jeden model, ve kterém si axiomy neprotiřečí, což vychází z~druhého axiomu $\forall x \forall y(eats(x, y) \leftrightarrow \neg eats(y, x))$ pro všechny dvojice prvků $x, y$~z~univerza, tedy v~případě $x = y$~vychází $eats(x, x) \leftrightarrow \neg eats(x, x)$.
+    \item[(b)] Teorie $T$~je úplná, protože pokud je teorie $T$~sporná, lze v~ní dokázat každá formule i~její negace a~v~rámci úplné teorie platí, že pro každou formuli $\varphi$~lze dokázat buď $\varphi$, nebo $\neg \varphi$.
+    \item[(c)] Teorie $T$~je rozhodnutelná (tj. množina důsledků $T$~je rozhodnutelná), protože každá formule ve sporné teorii je dokazatelná.
+\end{itemize}
+
+\subsection*{Rozhodnutí a~zdůvodnění redukovatelnosti $T_{PA} \leq T$}
+
+Peanova aritmetika $T_{PA}$ nemůže být redukovatelná na $T$~(tj. nemůže existovat vyčíslitelná redukce $f$, která každou větu $\varphi$~Peanovy aritmetiky převede na větu $f(\varphi )$ jazyka teorie $T$~takovou, že $T_{PA} \models \varphi \Longleftrightarrow T \models f(\varphi )$), tj. $T_{PA} \nleq T$.
+
+\noindent \\ Teorie $T$~je triviálně rozhodnutelná, protože je sporná, avšak Peanova aritmetika $T_{PA}$ je nerozhodnutelná.
+Není možné provést redukci nerozhodnutelného problému ($T_{PA}$) na problém rozhodnutelný ($T$).
+Pokud by taková vyčíslitelná redukce $f$~existovala, mohli bychom rozhodnout $T_{PA}$ tak, že bychom problém převedli pomocí $f$~a~výsledek ověřili v~$T$, to je však ve sporu s~nerozhodnutelností $T_{PA}$.
+
+\newpage
+
+\section*{Úloha 4}
+
+Uvažujme pole celých čísel proměnné délky, jehož datová struktura obsahuje proměnné (i) $arr$–ukazatel na začátek pole, (ii) $size$–velikost alokovaného prostoru, (iii) $used$–počet využitých položek od začátku.
+Pro práci s~polem máme funkce $array\_init, insert, sort$.
+Předpokládejme uniformní cenové kriterium, kde každý řádek má cenu 1 (s~výjimkou volání funkce $sort$).
+
+\subsection*{Analýza a~zdůvodnění složitosti jednoho volání $insert$ v~nejhorším případě}
+
+Pro určení složitosti v~nejhorším případě musíme uvažovat scénář s~největším počtem provedených operací, k~čemuž dojde ve chvíli, kdy je pole $array$ plně obsazeno, tj. $array.size = array.used$.
+V~tomto případě funkce $insert$ provede následující kroky:
+
+\begin{itemize}
+    \item vytvoří nové pole dvojnásobné velikosti a~zkopíruje všechny prvky starého pole, složitost této operace je lineární $\mathcal{O}(n)$,
+    \item vloží nový prvek na konec nového pole, složitost této operace je konstantní $\mathcal{O}(1)$,
+    \item seřadí nové pole s~již vloženým prvkem zavoláním funkce $sort$ (Bubble Sort, bublinkové řazení) a~v~nejhorším případě při zcela opačném pořadí prvků je počet prohození maximální, složitost této operace je tedy kvadratická $\mathcal{O}(n^2)$.
+\end{itemize}
+
+\noindent Složitost jednoho volání funkce $insert$ v~nejhorším případě je určena voláním funkce $sort$ kvůli nutnosti řazení pole po jeho zvětšení, tj. kvadratická $\mathcal{O}(n) + \mathcal{O}(1) + \mathcal{O}(n^2) = \mathcal{O}(n^2)$.
+
+\subsection*{Analýza a~zdůvodnění složitosti posloupnosti $n$~operací $insert$}
+
+Amortizovaná složitost vyjadřuje průměrnou cenu posloupnosti $n$~operací jako celku, přičemž stojí na základech pozorování, že drahé operace mohou nastat pouze jednou za delší dobu a~tudíž se jejich cena amortizuje.
+Předpokládejme posloupnost $n$~operací $insert$, kde se tyto operace dělí na dva typy --~levné (vložení nového prvku, tj. $array.size \neq array.used$) a~drahé (vložení nového prvku, kopírování prvků do nového pole, řazení nového pole, tj. $array.size = array.used$).
+
+\noindent \\ Nechť $n$~je celkový počet operací a~$k$~je aktuální počet prvků v~poli.
+Při levné operaci $insert$ se pouze vloží nový prvek s~cenou 1.
+V~rámci drahé operace $insert$ se kopíruje $k$~prvků, vloží se nový prvek a~řadí se pole o~velikosti $k + 1$~s~celkovou cenou $(k + 1)^2 \approx k^2$.
+
+\noindent \\ Protože cena nejdražší operace roste kvadraticky ($n^2$), ale počet levných operací roste pouze lineárně ($n$), musí kredit záviset na celkovém počtu prvků $n$.
+Z~pohledu $\mathcal{O}$~notace není podstatná konstanta, ale závislost na $n$, tedy lineární amortizovaná složitost $\mathcal{O} (n)$.
+Celková cena posloupnosti $n$~operací je omezena shora $\leq \mathcal{O} (n^2)$.
+
+\newpage
+
+\section*{Úloha 5}
+
+Nechť $G = (V, E)$ je orientovaný graf.
+Definujme sled jako $sled (v_1, v_n) \Leftrightarrow \exists$~posloupnost $v_1 e_1 v_2 e_2 \dots\\e_{n - 1} v_n : \forall 0 < i < n : e_i = (v_i, v_{i + 1})$ a~$e_i \in E$.
+Uzly a~hrany se mohou v~posloupnosti opakovat.
+Pro graf $G = (V, E)$, uzly $v_s, v_f \in V$~a~hranu $e \in E$~uvažujme problém existence sledu $sled (v_s, v_f)$, který obsahuje hranu $e$.
+Uvažujme funkci $check$, která prohledá všechny sledy do délky $2 \ast |V|$ a~zjistí, zda takovýto sled existuje.
+Předpokládejme uniformní cenové kriterium, kde každý řádek má cenu 1.
+
+\subsection*{Analýza časové složitosti funkce $check$ v~nejlepším případě}
+
+V~nejlepším případě algoritmus nalezne hledaný sled okamžitě, aniž by musel prohledávat zbytek grafu.
+Předpokládejme, že hrana $e = (v_s, v_f)$ existuje, tj. začátek hrany je počáteční uzel a~konec hrany je cílový uzel, a~je hned prvním následníkem v~seznamu $succ (v_s)$.
+V~takovém případě proběhne pouze konstantní počet operací a~časová složitost funkce $check$ v~nejlepším případě je tedy $\mathcal{O} (1)$.
+
+\subsection*{Analýza časové složitosti funkce $check$ v~nejhorším případě}
+
+Funkce $check$ provádí DFS (Depth-First Search, prohledávání do hloubky) všech možných sledů.
+Zásadním problémem je, že uvedený algoritmus neoznačuje navštívené uzly, ale pouze příznak průchodu hranou $e$~v~rámci aktuální cesty.
+Z~toho plyne, že algoritmus může procházet stejné uzly opakovaně v~různých větvích výpočtu až do hloubky $2 \ast |V|$.
+
+\noindent \\ V~nejhorším případě hledaný sled neexistuje, nebo je nalezen až na konci.
+V~každém kroku má uzel $|V|$ následníků a~algoritmus se zanořuje až do hloubky $2 \ast |V|$.
+Časová složitost funkce $check$ v~nejhorším případě je tedy $\mathcal{O} (|V|^{2 \ast |V|})$.
+
+\newpage
+
+\subsection*{Návrh funkce $check\_opt$ s~lepší asymptotickou složitostí v~nejhorším případě}
+
+Problém lze vyřešit mnohem efektivněji dekompozicí na dva podproblémy, které jsou ekvivalentní, tj. zda existuje cesta z~$v_s$ do $u$~(začátek hrany $e$) a~cesta z~$v$~(konec hrany $e$) do $v_f$.
+Pokud obě tyto cesty existují, jejich spojením přes hranu $e = (u, v)$ vznikne platný sled.
+Návrh optimalizované funkce $check\_opt$ je tedy následující:
+
+\begin{algorithm}
+\SetKwFunction{FMain}{check\_opt}
+\SetKwFunction{FReach}{reach}
+\SetKwProg{Fn}{Function}{:}{}
+
+\nl \Fn{\FMain{$(V, E), v_s, v_f, e$}}{
+  \nl \If{$e \notin E$}{
+    \nl \Return false;
+    }
+  \nl start := \FReach{$(V,E), v_s, u$};
+
+  \nl end := \FReach{$(V,E), v, v_f$};
+
+  \nl \Return{start $\wedge$ end};
+}
+
+\vspace{1em}
+
+\nl \Fn{\FReach{$(V, E), start, finish$}}{
+  \nl \If{$start = finish$}{
+    \nl \Return true;
+  }
+
+  \nl $queue$ := empty\_queue()\;
+  \nl $visited$ := empty\_set()\;
+  \nl $queue.\mathrm{enqueue}(start)$\;
+  \nl $visited.\mathrm{add}(start)$\;
+
+  \nl \While{$queue$ not empty}{
+    \nl $current := queue.\mathrm{dequeue}()$\;
+    \nl \ForEach{$w \in succ(current)$}{
+      \nl \If{$w = finish$}{
+        \nl \Return true;
+      }
+      \nl \If{$w \notin visited$}{
+        \nl $visited.\mathrm{add}(w)$\;
+        \nl $queue.\mathrm{enqueue}(w)$\;
+      }
+    }
+  }
+
+  \nl \Return false;
+}
+\end{algorithm}
+
+\subsection*{Analýza časové složitosti funkce $check\_opt$ v~nejhorším případě}
+
+Funkce $check\_opt$ nejdříve ověřuje existenci hrany, což je v~kontextu celého prohledávání zanedbatelné se složitostí $\mathcal{O} (1)$.
+První volání pomocné funkce $reach$ standardním algoritmem BFS (Breadth-First Search, prohledávání do šířky) projde v~nejhorším případě všechny vrcholy a~všechny hrany dostupné z~$v_s$.
+Díky množině $visited$ se každý uzel a~hrana zpracuje maximálně jednou s~celkovou složitostí $\mathcal{O} (|V| + |E|)$.
+Druhé volání pomocné funkce $reach$ má analogicky stejnou složitost $\mathcal{O} (|V| + |E|)$ jako první volání.
+
+\noindent \\ V~nejhorším případě tedy dostáváme celkovou složitost $\mathcal{O} (|V| + |E|) + \mathcal{O} (|V| + |E|) = \mathcal{O} (|V| + |E|)$, kdy se sčítá složitost dvou nezávislých průchodů a~funkce $check\_opt$ je ve srovnání s~původní funkcí $check$ lineární vzhledem k~velikosti grafu $G = (V, E)$.
+
+\end{document}
