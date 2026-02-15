@@ -1,0 +1,276 @@
+% /**
+%  * @file xkvace00.tex
+%  * @author David Kvaček (xkvace00@stud.fit.vutbr.cz)
+%  * @brief Task solution from the TIN course.
+%  * @date 2025-10-26
+%  */
+
+\documentclass[a4paper, 11pt]{article}
+
+\usepackage[left=2cm, text={17cm, 25cm}, bottom=3cm, top=3cm]{geometry}
+\usepackage[czech]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[IL2]{fontenc}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usetikzlibrary{automata, arrows}
+\tikzset{
+    ->,
+    >=stealth',
+    node distance=3cm,
+    initial text=$ $,
+}
+
+\begin{document}
+
+\begin{titlepage}
+    \begin{center}
+        \includegraphics[scale=0.125]{logo.png} \\
+        \vspace{\stretch{0.382}}
+        \LARGE{Řešení úkolu z~kursu Teoretická informatika} \\
+        \huge{\textbf{Úkol~1\,--\,TIN 2025/2026Z}}
+        \vspace{\stretch{0.618}}
+    \end{center}
+
+    \null \hfill \Large{David Kvaček} \\
+    \Large{Brno, \today \hfill \href{mailto:xkvace00@stud.fit.vutbr.cz}{xkvace00@stud.fit.vutbr.cz}}
+\end{titlepage}
+
+\section*{Úloha~1}
+
+Nad abecedou $\Sigma = \{a\}$ je každé slovo ve tvaru $a^n$, kde $n \geq 0$.
+Uvažujeme jazyk $L \subseteq \Sigma^*$ s~následujícími podmínkami:
+
+\begin{itemize}
+    \item[(a)] $a^5, a^8 \in L$,
+    \item[(b)] $a^3, a^7, a^9 \notin L$.
+\end{itemize}
+
+V~rámci všech jazyků splňujících zadané podmínky hledáme ten, který má nejmenší možný index relace prefixové ekvivalence $\sim_L$.
+Pro jazyky nad jednoprvkovou abecedou má smysl uvažovat periodické řešení, tj. závislost členství na zbytku po celočíselném dělení délky slova $\mathrm{mod}~p$.
+Pokud zvolíme periodu $p$, poté pro každá dvě čísla $m, n$ taková, že $m \equiv n \left( \mathrm{mod}~p \right)$, tak musí platit buď:
+
+\begin{itemize}
+    \item[(a)] $a^m, a^n \in L$, nebo
+    \item[(b)] $a^m, a^n \notin L$.
+\end{itemize}
+
+Hledáme nejmenší $p$, pro které lze přiřadit členství tak, aby byly splněny podmínky.
+
+\begin{enumerate}
+    \item $p = 1$: jednotlivá slova $a^n$ nelze rozlišit, všechna taková slova buď náleží, nebo nenáleží~$L$, což je v~rozporu se zadanými podmínkami,
+    \item $p = 2$: slova je možné rozdělit do dvou tříd, nicméně platí $5 \equiv 1, 8 \equiv 0$, tudíž podle podmínky (a) $a^5, a^8 \in L$ musí obě třídy náležet $L$, to však znemožňuje vyloučit slova $a^3, a^7, a^9$,
+    \item $p = 3$: slova rozdělíme do třech tříd, přičemž platí $3 \equiv 0, 5 \equiv 2, 7 \equiv 1, 8 \equiv 2, 9 \equiv 0$, v~tomto případě můžeme slova rozlišit podle zadaných podmínek tak, že třídy $0, 1$ nenáleží $L$, zatímco třída $2$~náleží $L$, díky čemuž jsou splněny obě podmínky (a) $a^5, a^8 \in L$, (b) $a^3, a^7, a^9 \notin L$.
+\end{enumerate}
+
+Při konstrukci DKA (obrázek~\ref{dka-m}) použijeme tři stavy značící zbytek po celočíselném dělení $\mathrm{mod}~3$.
+
+DKA~$M = \left( Q, \Sigma, \delta, s, F \right)$, kde:
+
+\begin{itemize}
+    \item $Q = \{ q_0, q_1, q_2 \}$,
+    \item $\Sigma = \{ a \}$,
+    \item $\delta\left( q_i, a \right) = q_{(i + 1)\,\mathrm{mod}\,3}$,
+    \item $s \in Q = q_0$,
+    \item $F \subseteq Q = \{ q_2 \}$.
+\end{itemize}
+
+\begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}
+        \node[state, initial] (q0) {$q_0$};
+        \node[state, right of=q0] (q1) {$q_1$};
+        \node[state, accepting, right of=q1] (q2) {$q_2$};
+
+        \draw
+            (q0) edge[above] node{a} (q1)
+            (q1) edge[above] node{a} (q2)
+            (q2) edge[bend right, above] node{a} (q0);
+    \end{tikzpicture}
+    \caption{DKA~$M$.}
+    \label{dka-m}
+\end{figure}
+
+Nyní dokážeme, že nelze sestrojit DKA s~menším počtem stavů přijímajících~$L$, tj. že v~jazyce existují alespoň tři navzájem rozlišitelné třídy.
+Pro $i \neq j \in \{ 0, 1, 2 \}$ označíme prefix $w_i = a^i$ a~následně demonstrujeme vzájemnou rozlišitelnost $w_0, w_1, w_2$ takovým způsobem, že pro každou dvojici najdeme koncovku~$z$, pro kterou platí $w_iz \in L$, zatímco $w_jz \notin L$:
+
+\begin{enumerate}
+    \item rozlišitelnost $w_0, w_1$, zvolíme $z = a^7$, poté:
+    \begin{itemize}
+        \item $w_0z = a^0a^7 = a^7 \notin L$,
+        \item $w_1z = a^1a^7 = a^8 \in L$,
+        \item[$\rightarrow$] tedy $w_0 \nsim w_1$,
+    \end{itemize}
+    \item rozlišitelnost $w_1, w_2$, zvolíme $z = a^6$, poté:
+    \begin{itemize}
+        \item $w_1z = a^1a^6 = a^7 \notin L$,
+        \item $w_2z = a^2a^6 = a^8 \in L$,
+        \item[$\rightarrow$] tedy $w_1 \nsim w_2$,
+    \end{itemize}
+    \item rozlišitelnost $w_0, w_2$, zvolíme $z = a^3$, poté:
+    \begin{itemize}
+        \item $w_0z = a^0a^3 = a^3 \notin L$,
+        \item $w_2z = a^2a^3 = a^5 \in L$,
+        \item[$\rightarrow$] tedy $w_0 \nsim w_2$,
+    \end{itemize}
+\end{enumerate}
+
+Tudíž existují tři vzájemně rozlišitelné třídy, takže index relace prefixové ekvivalence $\sim_L$ je alespoň~3.
+Jelikož je uveden DKA~$M$ se třemi stavy, index je právě~3, tak podle Myhill--Nerodovy věty neexistuje DKA s~menším počtem stavů, který přijímá jazyk~$L$.
+
+\newpage
+
+\section*{Úloha~2}
+
+Regulární jazyky jsou uzavřené na operaci $\otimes$.
+Pro důkaz předpokládejme existenci konečných automatů $A_1 = \left( Q_1, \Sigma, \delta_1, q_0^1, F_1 \right), A_2 = \left( Q_2, \Sigma, \delta_2, q_0^2, F_2 \right)$ přijímající jazyky $L_1$ a~$L_2$, potom jsme schopni sestrojit NKA $N$~přijímající $L_1 \otimes L_2$.
+NKA $N$~může současně simulovat běh obou automatů tak, že střídavě posílá symbol na $A_1$ a~na $A_2$.
+Navíc v~nějakém okamžiku může dojít k~tomu, že kratší ze slov skončí a~od této chvíle jsou všechny zbývající symboly posílány na jeden z~automatů.
+
+Definujeme NKA $N = \left( Q, \Sigma, \delta, q_0, F \right)$, kde:
+
+\begin{itemize}
+    \item $Q = Q_1 \times Q_2 \times \{ U, T \} \times \{ B, F, S \}$, přičemž $U, T$ značí členství dalšího symbolu do $A_1, A_2$ a~$B, F, S$ značí běh obou automatů, pouze automatu $A_1$ a~pouze automatu $A_2$,
+    \item $\Sigma$ je vstupní abeceda,
+    \item $\delta$~je přechodová funkce, pro kterou platí:
+    \begin{itemize}
+        \item při běhu obou automatů pokud je členství dalšího symbolu do $A_1$, s~přečteným symbolem $a \in \Sigma$ se přechází $\left( p, q, U, B \right) \rightarrow^a \left( \delta_1\left( p, a \right), q, T, B \right)$, naopak pokud je členství dalšího symbolu do $A_2$, s~přečteným symbolem $a \in \Sigma$ se přechází $\left( p, q, T, B \right) \rightarrow^a \left( p, \delta_2\left( q, a \right), U, B \right)$ a~současně z~každého stavu existují $\epsilon$--přechody $\left( p, q, U / T, B \right) \rightarrow^\epsilon \left( \delta_1\left( p, a \right), q, U / T, F \right)$ právě tehdy, když $q \in F_2$ a~analogicky $\left( p, q, U / T, B \right) \rightarrow^\epsilon \left( \delta_1\left( p, a \right), q, U / T, S \right)$ právě tehdy, když $p \in F_1$,
+        \item při běhu pouze automatu $A_1$ každý přečtený symbol $a \in \Sigma$~aktualizuje pouze stav automatu $A_1$, tj. $\left( p, q, U, F \right) \rightarrow^a \left( \delta_1\left( p, a \right), q, U, F \right)$,
+        \item při běhu pouze automatu $A_2$ každý přečtený symbol $a \in \Sigma$~aktualizuje pouze stav automatu $A_2$, tj. $\left( p, q, T, S \right) \rightarrow^a \left( p, \delta_2\left( q, a \right), T, S \right)$,
+    \end{itemize}
+    \item $q_0 \in Q = \left( q_0^1, q_0^2, U, B \right)$,
+    \item množina akceptujících stavů $F$~obsahuje takové stavy, pro které platí:
+    \begin{itemize}
+        \item při běhu obou automatů je přečten vstup a~současně $p \in F_1, q \in F_2$,
+        \item při běhu pouze automatu $A_1$ je přečten vstup a~současně $p \in F_1$, přičemž v~okamžiku přechodu do režimu běhu pouze automatu $A_1$ platí $q \in F_2$,
+        \item při běhu pouze automatu $A_2$ je přečten vstup a~současně $q \in F_2$, přičemž v~okamžiku přechodu do režimu běhu pouze automatu $A_2$ platí $p \in F_1$,
+    \end{itemize}
+\end{itemize}
+
+\newpage
+
+\section*{Úloha~3}
+
+\begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}
+        \node[state, initial] at (0.0, 9.0) (0) {0};
+        \node[state] at (2.0, 6.0) (1) {1};
+        \node[state] at (4.0, 9.0) (2) {2};
+        \node[state] at (4.0, 3.0) (3) {3};
+        \node[state] at (8.0, 9.0) (4) {4};
+        \node[state] at (8.0, 3.0) (5) {5};
+        \node[state] at (6.0, 6.0) (6) {6};
+        \node[state, accepting] at (10.0, 0.0) (7) {7};
+
+        \draw[align=right]
+            (0) edge[below left] node{$\Delta / R$} (1)
+            (1) edge[loop left] node{$\# / R$} (1)
+            (1) edge[left, above left] node{$a / \#$} (2)
+            (1) edge[right, below left] node{$b / \#$} (3)
+            (1) edge[bend right, below left, out=290.0, in=230.0, looseness=1.4] node{$\Delta / \Delta$} (7)
+            (2) edge[loop above] node{$a / R$ \\ $b / R$ \\ $\# / R$} (2)
+            (2) edge[above] node{$\Delta / L$} (4)
+            (3) edge[loop below] node{$a / R$ \\ $b / R$ \\ $\# / R$} (3)
+            (3) edge[below] node{$\Delta / L$} (5)
+            (4) edge[loop above] node{$\# / L$} (4)
+            (4) edge[left, right] node{$a / \#$} (6)
+            (4) edge[bend left, right] node{$\Delta / \Delta$} (7)
+            (5) edge[loop below] node{$\# / L$} (5)
+            (5) edge[right, right] node{$b / \#$} (6)
+            (5) edge[left, right] node{$\Delta / \Delta$} (7)
+            (6) edge[above] node{$\Delta / R$} (1)
+            (6) edge[loop above] node{$a / L$ \\ $b / L$ \\ $\# / L$} (6);
+    \end{tikzpicture}
+    \caption{Přechodový diagram Turingova stroje $T_4$.}
+    \label{tm-t4}
+\end{figure}
+
+Jazyk $L_4$ je částečně rozhodnutelný a~nyní toto tvrzení dokážeme s~využitím pomocného Turingova stroje $T_4$ (obrázek~\ref{tm-t4}) přijímající jazyk obsahující palindrom.
+Chceme-li dokázat, že $L_4$ je částečně rozhodnutelný, stačí popsat konstrukci Turingova stroje $M_4$, kde $L_4 = L\left( M_4 \right)$.
+Není nutné popisovat chování stroje na úrovni jednotlivých přechodů, přičemž o~různých operacích víme, že je možné je v~rámci běhu Turingova stroje provést, ale postačující je vysokoúrovňový popis jeho chování.
+Vstupem je tedy $\langle G \rangle$ značící kódování neomezené gramatiky~$G$ do řetězců nad abecedou $\{ a, b \}$, kde $L\left( G \right)$ obsahuje palindrom a~následně řešíme pomocí deterministického Turingova stroje:
+
+\begin{enumerate}
+    \item zkonstruujeme DTS $M_4$ takový, aby $L\left( M_4 \right) = L_4$,
+    \item DTS $M_4$ má na svém vstupu řetězec nad abecedou $\{ a, b \}$,
+    \item DTS $M_4$ ověří, zda jeho vstup odpovídá validnímu kódu $\langle G \rangle$ nějakého Turingova stroje $T_4$, pokud ne, odmítne, jinak pokračuje,
+    \item DTS $M_4$ postupně a~systematicky generuje veškeré řetězce~$w$ nad abecedou~$\Sigma = \{ a, b \}$ simulovaného stroje $T_4$ v~lexikografickém pořadí $w_0, w_1, w_2, \dots$,
+    \item DTS $M_4$ spustí první krok simulace stroje $T_4$ na řetězci $w_0$, simulaci poté pozastaví a~uloží si řídicí informace na pomocnou pásku,
+    \item DTS $M_4$ následně opakovaně provádí následující postup:
+    \begin{itemize}
+        \item provede jeden krok všech rozpracovaných simulací,
+        \item provede první krok simulace následujícího dosud nepoužitého řetězce v~uvedeném lexikografickém pořadí,
+    \end{itemize}
+    \item pokud některá simulace skončí odmítnutím, v~příští iteraci již není spouštěna,
+    \item pokud některá simulace skončí akceptováním, DTS $M_4$ akceptuje svůj vstup $\langle G \rangle$,
+    \item pokud jazyk stroje $T_4$ neobsahuje palindrom, DTS $M_4$ cyklí.
+\end{enumerate}
+
+\newpage
+
+\section*{Úloha~5}
+
+Aby pro Turingův stroj $M_5$ (obrázek~\ref{tm-m5}) platilo, že $L\left( M_5 \right) = \{ w\ |\ \#_a\left( w \right) = \#_b\left( w \right) \}$, je nutné doplnit následující popisky přechodů:
+
+\begin{itemize}
+    \item vlastní smyčka stavu~(2): doplněny přechody $a / R, \# / R$ tak, aby byla čtecí hlava přesunuta až na pozici nacházející se případně za veškerým vstupem, tj. pohyb směrem vpravo přes symboly $a, \#$ v~rámci této větve a~tím bylo umožněno párování symbolů~$a$~a~$b$.
+    \item vlastní smyčka stavu~(3): doplněny přechody $b / R, \# / R$ tak, aby byla čtecí hlava přesunuta až na pozici nacházející se případně za veškerým vstupem, tj. pohyb směrem vpravo přes symboly $b, \#$ v~rámci této větve a~tím bylo umožněno párování symbolů~$b$~a~$a$.
+    \item vlastní smyčka stavu~(10): doplněny přechody $a / L, b / L, \# / L$ tak, aby byla čtecí hlava přesunuta zpět na počáteční pozici vstupní pásky, tj. pohyb směrem vlevo přes symboly $a, b, \#$ a~tím bylo umožněno opětovně načítat dosud nezpracovaný vstup.
+\end{itemize}
+
+\begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}
+        \node[state, initial] at (0.0, 14.0) (0) {0};
+        \node[state] at (2.0, 12.0) (1) {1};
+        \node[state] at (3.5, 14.0) (2) {2};
+        \node[state] at (3.5, 10.0) (3) {3};
+        \node[state] at (6.5, 14.0) (4) {4};
+        \node[state] at (6.5, 10.0) (5) {5};
+        \node[state] at (8.0, 12.0) (6) {6};
+        \node[state] at (8.0, 2.0) (7) {7};
+        \node[state] at (5.0, 4.0) (8) {8};
+        \node[state] at (5.0, 0.0) (9) {9};
+        \node[state] at (2.0, 2.0) (10) {10};
+        \node[state, accepting] at (10.0, 0.0) (11) {11};
+
+        \draw[align=right]
+            (0) edge[below left] node{$\Delta / R$} (1)
+            (1) edge[loop left] node{$\# / R$} (1)
+            (1) edge[bend left, left] node{$a / \#$} (2)
+            (1) edge[bend right, left] node{$b / \#$} (3)
+            (1) edge[above] node{$\Delta / L$} (6)
+            (2) edge[bend left, right] node{$b / \#$} (1)
+            (2) edge[loop above] node{$a / R$ \\ $\# / R$ \\} (2)
+            (2) edge[above] node{$\Delta / L$} (4)
+            (3) edge[bend right, right] node{$a / \#$} (1)
+            (3) edge[loop below] node{\\ $b / R$ \\ $\# / R$} (3)
+            (3) edge[below] node{$\Delta / L$} (5)
+            (4) edge[loop above] node{$a / L$ \\ $b / L$} (4)
+            (4) edge[above right] node{$\# / a$} (6)
+            (5) edge[loop below] node{$a / L$ \\ $b / L$} (5)
+            (5) edge[below right] node{$\# / b$} (6)
+            (6) edge[loop right] node{$a / L$ \\ $b / L$ \\ $\# / L$} (6)
+            (6) edge[bend left, right] node{$\Delta / R$} (7)
+            (7) edge[loop right, right] node{$\# / R$} (7)
+            (7) edge[above right] node{$a / R$} (8)
+            (7) edge[below right] node{$b / R$} (9)
+            (7) edge[above, right] node{$\Delta / \Delta$} (11)
+            (8) edge[loop above, above right] node{$a / R$ \\ $\# / R$} (8)
+            (8) edge[above left] node{$b / L$} (10)
+            (9) edge[loop below, right] node{$b / R$ \\ $\# / R$} (9)
+            (9) edge[below left] node{$a / L$} (10)
+            (10) edge[bend left, left] node{$\Delta / R$} (1)
+            (10) edge[loop left] node{$a / L$\ \ \ \ \ \\ $b / L$\ \ \ \ \ \ \\ $\# / L$\ \ \ \ \ } (10)
+            (2.5, 15.1) rectangle ++(2.0, 2.0)
+            (2.5, 6.9) rectangle ++(2.0, 2.0)
+            (-1.1, 1.0) rectangle ++(2.0, 2.0);
+    \end{tikzpicture}
+    \caption{Přechodový diagram Turingova stroje $M_5$.}
+    \label{tm-m5}
+\end{figure}
+
+\end{document}
