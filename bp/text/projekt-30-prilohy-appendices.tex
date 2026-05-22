@@ -1,0 +1,128 @@
+%
+% @file projekt-30-prilohy-appendices.tex
+% @author David Kvaček (xkvace00@stud.fit.vutbr.cz)
+% @brief Source code of the LaTeX bachelor's thesis appendices.
+% @date 2025-05-13
+%
+
+\chapter{Ukázka souboru GPX}
+\label{TheGPXFileSample}
+
+Ukázka základní struktury souboru GPX, který obsahuje krátkou naplánovanou cyklotrasu a~pochází z~portálu \url{https://mapy.cz/}.
+
+\begin{lstlisting}[aboveskip=2em, caption={Formát souboru GPX.\protect\footnotemark}, frame=lines, label=GPXProtocol, language=XML]
+<?xml version="1.0" encoding="utf-8"?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1"
+creator="https://mapy.cz/">
+    <trk>
+        <name>GPX</name>
+        <trkseg>
+            <trkpt lat="49.226421" lon="16.596105">
+                <ele>223.000000</ele>
+            </trkpt>
+            <trkpt lat="49.226579" lon="16.596015">
+                <ele>223.000000</ele>
+            </trkpt>
+            <trkpt lat="49.227125" lon="16.595755">
+                <ele>224.000000</ele>
+            </trkpt>
+        </trkseg>
+    </trk>
+</gpx>
+\end{lstlisting}
+
+\footnotetext{Převzato z: \url{https://mapy.cz/}.}
+
+\chapter{Ukázka souboru KML}
+\label{TheKMLFileSample}
+
+Ukázka základní struktury souboru KML, který obsahuje krátkou naplánovanou cyklotrasu a~pochází z~portálu \url{https://earth.google.com/}.
+
+\begin{lstlisting}[aboveskip=2em, caption={Formát souboru KML.\protect\footnotemark}, frame=lines, label=KMLProtocol, language=XML]
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2"
+xmlns:gx="http://www.google.com/kml/ext/2.2"
+xmlns:kml="http://www.opengis.net/kml/2.2"
+xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+    <Placemark id="033956497B324949CBFE">
+        <name>KML</name>
+        <LookAt>
+            <longitude>16.59574333195501</longitude>
+            <latitude>49.22699109369113</latitude>
+            <altitude>223.8923746715109</altitude>
+            <heading>0</heading>
+            <tilt>0</tilt>
+            <range>353.3934234254775</range>
+            <altitudeMode>absolute</altitudeMode>
+        </LookAt>
+        <LineString>
+            <coordinates>
+                16.59612248167595,49.22643096169614,0
+                16.59545536692891,49.22772694896454,0 
+            </coordinates>
+        </LineString>
+    </Placemark>
+</Document>
+</kml>
+\end{lstlisting}
+
+\footnotetext{Převzato z: \url{https://earth.google.com/}.}
+
+\chapter{Ukázka souboru TCX}
+\label{TheTCXFileSample}
+
+Ukázka základní struktury souboru TCX, který obsahuje krátkou naplánovanou cyklotrasu a~pochází z~portálu \url{https://www.alltrails.com/}.
+
+\begin{lstlisting}[aboveskip=2em, caption={Formát souboru TCX.\protect\footnotemark}, frame=lines, label=TCXProtocol, language=XML]
+<?xml version="1.0" encoding="UTF-8"?>
+<TrainingCenterDatabase
+xmlns="http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<Courses>
+    <Course>
+        <Name>TCX</Name>
+        <Lap>
+            <DistanceMeters>152.85949889576523</DistanceMeters>
+            <BeginPosition>
+                <LatitudeDegrees>49.22642100</LatitudeDegrees>
+                <LongitudeDegrees>16.59610500</LongitudeDegrees>
+            </BeginPosition>
+            <EndPosition>
+                <LatitudeDegrees>49.22772300</LatitudeDegrees>
+                <LongitudeDegrees>16.59543200</LongitudeDegrees>
+            </EndPosition>
+            <Intensity>Active</Intensity>
+        </Lap>
+        <Track>
+            <Trackpoint>
+                <Position>
+                    <LatitudeDegrees>49.22642100</LatitudeDegrees>
+                    <LongitudeDegrees>16.59610500</LongitudeDegrees>
+                </Position>
+                <AltitudeMeters>227.00000</AltitudeMeters>
+                <DistanceMeters>0.000</DistanceMeters>
+            </Trackpoint>
+            <Trackpoint>
+                <Position>
+                    <LatitudeDegrees>49.22737700</LatitudeDegrees>
+                    <LongitudeDegrees>16.59562900</LongitudeDegrees>
+                </Position>
+                <AltitudeMeters>228.00000</AltitudeMeters>
+                <DistanceMeters>111.812</DistanceMeters>
+            </Trackpoint>
+            <Trackpoint>
+                <Position>
+                    <LatitudeDegrees>49.22772300</LatitudeDegrees>
+                    <LongitudeDegrees>16.59543200</LongitudeDegrees>
+                </Position>
+                <AltitudeMeters>229.00000</AltitudeMeters>
+                <DistanceMeters>152.859</DistanceMeters>
+            </Trackpoint>
+        </Track>
+    </Course>
+</Courses>
+</TrainingCenterDatabase>
+\end{lstlisting}
+
+\footnotetext{Převzato z: \url{https://www.alltrails.com/}.}
