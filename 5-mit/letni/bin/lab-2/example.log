@@ -1,0 +1,66 @@
+SEED:1139438100
+Circuit: adder_full_u4bit PI:9 PO:5 nodes:31
+Settings: CGP nodes:50 lambda:1 mutations:1 FS:BUFa,NOTa,AND,OR,XOR,NAND,NOR,XNOR
+initial: 1240.0/2560
+generation:         1 time: 0.000 idx:0 fitness: 1296/2560 active nodes: 26
+generation:        12 time: 0.001 idx:0 fitness: 1352/2560 active nodes: 27
+generation:        26 time: 0.002 idx:0 fitness: 1392/2560 active nodes: 28
+generation:        55 time: 0.004 idx:0 fitness: 1404/2560 active nodes: 27
+generation:       318 time: 0.017 idx:0 fitness: 1436/2560 active nodes: 23
+generation:       334 time: 0.018 idx:0 fitness: 1492/2560 active nodes: 22
+generation:       566 time: 0.028 idx:0 fitness: 1524/2560 active nodes: 21
+generation:       583 time: 0.029 idx:0 fitness: 1536/2560 active nodes: 21
+generation:       882 time: 0.043 idx:0 fitness: 1664/2560 active nodes: 28
+generation:      1096 time: 0.053 idx:0 fitness: 1696/2560 active nodes: 23
+generation:      1692 time: 0.078 idx:0 fitness: 1712/2560 active nodes: 23
+generation:      2166 time: 0.096 idx:0 fitness: 1728/2560 active nodes: 27
+generation:      3738 time: 0.161 idx:0 fitness: 1744/2560 active nodes: 26
+generation:      3741 time: 0.161 idx:0 fitness: 1760/2560 active nodes: 26
+generation:      3804 time: 0.164 idx:0 fitness: 1792/2560 active nodes: 28
+generation:      8518 time: 0.360 idx:0 fitness: 1808/2560 active nodes: 35
+generation:      8531 time: 0.360 idx:0 fitness: 1840/2560 active nodes: 33
+generation:      8550 time: 0.361 idx:0 fitness: 1888/2560 active nodes: 32
+generation:      8938 time: 0.375 idx:0 fitness: 1920/2560 active nodes: 29
+generation:      9537 time: 0.399 idx:0 fitness: 1936/2560 active nodes: 27
+generation:      9538 time: 0.399 idx:0 fitness: 1952/2560 active nodes: 27
+generation:     11996 time: 0.498 idx:0 fitness: 1984/2560 active nodes: 30
+generation:     19818 time: 0.905 idx:0 fitness: 1992/2560 active nodes: 30
+generation:     19825 time: 0.906 idx:0 fitness: 2000/2560 active nodes: 30
+generation:     20545 time: 0.966 idx:0 fitness: 2008/2560 active nodes: 27
+generation:     20578 time: 0.969 idx:0 fitness: 2016/2560 active nodes: 27
+generation:     20630 time: 0.973 idx:0 fitness: 2024/2560 active nodes: 27
+generation:     20670 time: 0.976 idx:0 fitness: 2040/2560 active nodes: 27
+generation:     21323 time: 1.023 idx:0 fitness: 2048/2560 active nodes: 28
+generation:     21416 time: 1.026 idx:0 fitness: 2080/2560 active nodes: 28
+generation:     21649 time: 1.036 idx:0 fitness: 2112/2560 active nodes: 27
+generation:     28001 time: 1.276 idx:0 fitness: 2120/2560 active nodes: 34
+generation:     28284 time: 1.287 idx:0 fitness: 2128/2560 active nodes: 36
+generation:     28791 time: 1.304 idx:0 fitness: 2144/2560 active nodes: 34
+generation:     31935 time: 1.411 idx:0 fitness: 2176/2560 active nodes: 31
+generation:     88212 time: 3.532 idx:0 fitness: 2192/2560 active nodes: 32
+generation:     89609 time: 3.583 idx:0 fitness: 2208/2560 active nodes: 30
+generation:    125401 time: 4.869 idx:0 fitness: 2224/2560 active nodes: 34
+generation:    125607 time: 4.876 idx:0 fitness: 2240/2560 active nodes: 34
+generation:    186461 time: 6.860 idx:0 fitness: 2272/2560 active nodes: 39
+generation:    186725 time: 6.868 idx:0 fitness: 2288/2560 active nodes: 39
+generation:    188051 time: 6.906 idx:0 fitness: 2304/2560 active nodes: 38
+generation:    193849 time: 7.085 idx:0 fitness: 2336/2560 active nodes: 40
+generation:    194146 time: 7.094 idx:0 fitness: 2368/2560 active nodes: 40
+generation:    202584 time: 7.340 idx:0 fitness: 2376/2560 active nodes: 40
+generation:    259842 time: 8.943 idx:0 fitness: 2380/2560 active nodes: 44
+generation:    267481 time: 9.138 idx:0 fitness: 2392/2560 active nodes: 44
+generation:    498071 time: 15.246 idx:0 fitness: 2400/2560 active nodes: 38
+generation:    536514 time: 16.425 idx:0 fitness: 2408/2560 active nodes: 37
+generation:    536559 time: 16.426 idx:0 fitness: 2416/2560 active nodes: 37
+generation:    537754 time: 16.461 idx:0 fitness: 2432/2560 active nodes: 37
+generation:    606305 time: 18.504 idx:0 fitness: 2440/2560 active nodes: 40
+generation:    608640 time: 18.568 idx:0 fitness: 2464/2560 active nodes: 41
+generation:    818463 time: 24.517 idx:0 fitness: 2480/2560 active nodes: 39
+generation:    818487 time: 24.518 idx:0 fitness: 2512/2560 active nodes: 39
+generation:   1518516 time: 44.267 idx:0 fitness: 2524/2560 active nodes: 36
+generation:   1589571 time: 46.339 idx:0 fitness: 2536/2560 active nodes: 38
+generation:   1647531 time: 48.027 idx:0 fitness: 2560/2560 active nodes: 37
+SUCCESS
+duration: 48.0273871421814 evals/sec:34303.98982819138
+Chromosome <2-input nodes, arrangement: 50x1, inputs: 9, outputs: 5 CGP nodes: ([#9] AND,1,5),([#10] XOR,1,5),([#11] AND,8,4),([#12] OR,11,9),([#13] AND,0,2),([#14] OR,10,1),([#15] AND,12,14),([#16] XNOR,2,6),([#17] XOR,8,4),([#18] XOR,11,2),([#19] OR,6,2),([#20] XOR,0,17),([#21] BUFa,9,14),([#22] AND,17,0),([#23] NOR,6,20),([#24] AND,22,10),([#25] BUFa,8,10),([#26] BUFa,10,16),([#27] OR,15,24),([#28] AND,5,18),([#29] BUFa,7,6),([#30] NOR,27,16),([#31] NOR,5,6),([#32] NOR,0,27),([#33] XNOR,22,11),([#34] XOR,1,33),([#35] XNOR,26,33),([#36] XOR,19,30),([#37] XOR,1,7),([#38] XOR,36,3),([#39] AND,8,29),([#40] AND,7,38),([#41] OR,28,23),([#42] OR,25,31),([#43] NOR,41,36),([#44] OR,34,26),([#45] AND,23,19),([#46] NOTa,5,33),([#47] XNOR,11,44),([#48] NOTa,37,26),([#49] BUFa,8,6),([#50] XNOR,47,22),([#51] NOR,45,1),([#52] AND,36,3),([#53] NOR,33,50),([#54] NOTa,13,18),([#55] XOR,7,38),([#56] BUFa,44,31),([#57] XOR,40,52),([#58] XOR,50,16),[20,35,58,55,57]>
+[8, 1, 5, 6, 1, 5, 8, 8, 4, 14, 11, 9, 8, 0, 2, 14, 10, 1, 8, 12, 14, 9, 2, 6, 6, 8, 4, 6, 11, 2, 14, 6, 2, 6, 0, 17, 12, 9, 14, 8, 17, 0, 1, 6, 20, 8, 22, 10, 12, 8, 10, 12, 10, 16, 14, 15, 24, 8, 5, 18, 12, 7, 6, 1, 27, 16, 1, 5, 6, 1, 0, 27, 9, 22, 11, 6, 1, 33, 9, 26, 33, 6, 19, 30, 6, 1, 7, 6, 36, 3, 8, 8, 29, 8, 7, 38, 14, 28, 23, 14, 25, 31, 1, 41, 36, 14, 34, 26, 8, 23, 19, 3, 5, 33, 9, 11, 44, 3, 37, 26, 12, 8, 6, 9, 47, 22, 1, 45, 1, 8, 36, 3, 1, 33, 50, 3, 13, 18, 6, 7, 38, 12, 44, 31, 6, 40, 52, 6, 50, 16, 20, 35, 58, 55, 57]
