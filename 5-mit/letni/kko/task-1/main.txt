@@ -1,0 +1,81 @@
+0001101 # slovnik 13 polozek, varianta Wait-k-and-move, k=11
+01000001 # polozka 0, znak A
+01011111 # polozka 1, znak _
+01010010 # polozka 2, znak R
+01001100 # polozka 3, znak L
+01001011 # polozka 4, znak K
+01010110 # polozka 5, znak V
+01001001 # polozka 6, znak I
+01001111 # polozka 7, znak O
+01001110 # polozka 8, znak N
+01010011 # polozka 9, znak S
+01010100 # polozka 10, znak T
+01010101 # polozka 11, znak U
+01001000 # polozka 12, znak H
+00101 # zakodovana hodnota 4, znak K
+011 # zakodovana hodnota 2, znak R
+1 # zakodovana hodnota 0, znak A
+00100 # zakodovana hodnota 3, znak L
+0001000 # zakodovana hodnota 7, znak O
+00110 # zakodovana hodnota 5, znak V
+0001001 # zakodovana hodnota 8, znak N
+1 # zakodovana hodnota 0, znak A
+010 # zakodovana hodnota 1, znak _
+00101 # zakodovana hodnota 4, znak K
+00100 # zakodovana hodnota 3, znak L
+1 # zakodovana hodnota 0, znak A
+011 # zakodovana hodnota 2, znak R
+1 # zakodovana hodnota 0, znak A
+010 # zakodovana hodnota 1, znak _
+00101 # zakodovana hodnota 4, znak K
+011 # zakodovana hodnota 2, znak R
+1 # zakodovana hodnota 0, znak A
+00100 # zakodovana hodnota 3, znak L
+0001000 # zakodovana hodnota 7, znak O
+00110 # zakodovana hodnota 5, znak V
+00111 # zakodovana hodnota 6, znak I
+010 # zakodovana hodnota 1, znak _
+0001001 # zakodovana hodnota 8, znak N
+1 # zakodovana hodnota 0, znak A
+010 # zakodovana hodnota 1, znak _
+00101 # zakodovana hodnota 4, znak K
+00100 # zakodovana hodnota 3, znak L
+1 # zakodovana hodnota 0, znak A
+00110 # zakodovana hodnota 5, znak V
+00111 # zakodovana hodnota 6, znak I
+011 # zakodovana hodnota 2, znak R
+010 # zakodovana hodnota 1, znak _
+0001101 # zakodovana hodnota 12, znak H
+011 # zakodovana hodnota 2, znak R
+1 # zakodovana hodnota 0, znak A
+00100 # zakodovana hodnota 3, znak L
+1 # zakodovana hodnota 0, znak A
+010 # zakodovana hodnota 1, znak _
+1 # zakodovana hodnota 0, znak A
+010 # zakodovana hodnota 1, znak _
+0001010 # zakodovana hodnota 9, znak S
+0001011 # zakodovana hodnota 10, znak T
+1 # zakodovana hodnota 0, znak A
+011 # zakodovana hodnota 2, znak R
+1 # zakodovana hodnota 0, znak A
+010 # zakodovana hodnota 1, znak _
+00100 # zakodovana hodnota 3, znak L
+1 # zakodovana hodnota 0, znak A
+011 # zakodovana hodnota 2, znak R
+1 # zakodovana hodnota 0, znak A
+010 # zakodovana hodnota 1, znak _
+0001100 # zakodovana hodnota 11, znak U
+010 # zakodovana hodnota 1, znak _
+00101 # zakodovana hodnota 4, znak K
+00100 # zakodovana hodnota 3, znak L
+1 # zakodovana hodnota 0, znak A
+00110 # zakodovana hodnota 5, znak V
+00111 # zakodovana hodnota 6, znak I
+011 # zakodovana hodnota 2, znak R
+0001100 # zakodovana hodnota 11, znak U
+010 # zakodovana hodnota 1, znak _
+0001010 # zakodovana hodnota 9, znak S
+0001011 # zakodovana hodnota 10, znak T
+1 # zakodovana hodnota 0, znak A
+00100 # zakodovana hodnota 3, znak L
+1 # zakodovana hodnota 0, znak A
